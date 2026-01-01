@@ -1,0 +1,412 @@
+
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Dashboard - ChillSaathi</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <script src="https://unpkg.com/feather-icons"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f7f9fc;
+        }
+        .gradient-text {
+            background: linear-gradient(to right, #2dd4bf, #3b82f6);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-fill-color: transparent;
+        }
+        .card-hover {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+        }
+        #auth-modal-backdrop {
+            transition: opacity 0.3s ease-in-out;
+        }
+        #auth-modal-panel {
+            transition: all 0.3s ease-in-out;
+        }
+        
+        /* MODIFICATION: Replaced old dropdown CSS with the correct, consistent rules */
+        .animated-gradient-background {
+            background: linear-gradient(90deg, #2dd4bf, #3b82f6, #818cf8, #2dd4bf);
+            background-size: 200% auto;
+            animation: gradient-flow 3s linear infinite;
+        }
+        @keyframes gradient-flow {
+            to {
+                background-position: 200% center;
+            }
+        }
+        #profile-menu {
+            transition: opacity 0.2s ease-out, transform 0.2s ease-out;
+        }
+        #profile-menu.is-hidden {
+            opacity: 0;
+            transform: translateY(0.5rem) scale(0.95);
+            pointer-events: none;
+        }
+        #profile-menu.is-visible {
+           opacity: 1;
+           transform: translateY(0) scale(1);
+        }
+    </style>
+</head>
+<body class="text-slate-700">
+
+   
+    <header class="bg-white/80 backdrop-blur-lg fixed top-0 left-0 right-0 z-50 shadow-sm">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="index.html" class="text-2xl font-bold">
+                <span class="gradient-text">🌿 ChillSaathi</span>
+            </a>
+            <nav class="hidden md:flex items-center space-x-6">
+                 <a href="index.html" class="hover:text-blue-500 transition-colors">Home</a>
+                    <a href="index.html#mind-gym" class="hover:text-blue-500 transition-colors">Mind Gym</a>
+                    <a href="community.html" class="hover:text-blue-500 transition-colors">Community</a>
+                    <a href="booking.html" class="hover:text-blue-500 transition-colors">Consultation</a>
+                    <a href="about.html" class="hover:text-blue-500 transition-colors">About Us</a>
+                </nav>
+            <div id="auth-container" class="hidden md:flex items-center space-x-2">
+                <div id="logged-out-view">
+                    <a href="#" id="sign-in-btn" class="text-blue-500 font-semibold px-4 py-2 rounded-full hover:bg-blue-50">Sign In</a>
+                    <a href="#" id="get-started-btn" class="bg-blue-500 text-white font-semibold px-5 py-2 rounded-full hover:bg-blue-600 shadow-md">Get Started</a>
+                </div>
+                
+                <div id="logged-in-view" class="hidden relative">
+                    <button id="profile-menu-button" type="button" class="animated-gradient-background flex items-center space-x-2 text-sm text-white font-semibold rounded-md shadow-lg hover:brightness-110 transition-all focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 px-4 py-2">
+                        <i data-feather="user" class="h-5 w-5"></i>
+                        <span>Profile</span>
+                    </button>
+                    
+                    <div id="profile-menu" class="origin-top-right absolute right-0 mt-2 w-56 rounded-lg shadow-xl bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
+                        <div class="px-4 py-3 border-b border-slate-200">
+                            <p class="text-sm font-medium text-slate-900">Signed in as</p>
+                            <p id="user-id-display" class="text-sm text-slate-500 truncate"></p>
+                        </div>
+                        
+                        <div class="py-1" role="none">
+                            <a href="/dashboard.html" class="group flex items-center gap-3 px-4 py-2 text-sm text-slate-700 hover:bg-blue-50 hover:text-blue-600 transition-colors" role="menuitem">
+                                <i data-feather="grid" class="w-4 h-4 text-slate-400 group-hover:text-blue-600 transition-colors"></i>
+                                <span>My Dashboard</span>
+                            </a>
+                            <a href="/settings.html" class="group flex items-center gap-3 px-4 py-2 text-sm text-slate-700 hover:bg-blue-50 hover:text-blue-600 transition-colors" role="menuitem">
+                                <i data-feather="settings" class="w-4 h-4 text-slate-400 group-hover:text-blue-600 transition-colors"></i>
+                                <span>Account Settings</span>
+                            </a>
+                            <a href="/help.html" class="group flex items-center gap-3 px-4 py-2 text-sm text-slate-700 hover:bg-blue-50 hover:text-blue-600 transition-colors" role="menuitem">
+                                <i data-feather="help-circle" class="w-4 h-4 text-slate-400 group-hover:text-blue-600 transition-colors"></i>
+                                <span>Help & Support</span>
+                            </a>
+        
+                        </div>
+
+                            <div class="py-1 border-t border-slate-200" role="none">
+                                <button id="sign-out-btn" class="group w-full flex items-center gap-3 text-left px-4 py-2 text-sm text-slate-700 hover:bg-blue-50 hover:text-blue-600 transition-colors" role="menuitem">
+                                    <i data-feather="log-out" class="w-4 h-4 text-slate-400 group-hover:text-blue-600 transition-colors"></i>
+                                    <span>Sign Out</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button id="mobile-menu-button" class="md:hidden"><i data-feather="menu"></i></button>
+        </div>
+        <div id="mobile-menu" class="hidden md:hidden px-6 pb-4">
+            <a href="index.html" class="block py-2">Home</a>
+            <a href="index.html#mind-gym" class="block py-2">Mind Gym</a>
+            <a href="community.html" class="block py-2">Community</a>
+            <a href="booking.html" class="block py-2">Consultation</a>
+            <a href="about.html" class="block py-2">About Us</a>
+            <div class="mt-4 border-t pt-4">
+                <a href="#" id="mobile-sign-in-btn" class="block text-center w-full text-blue-500 font-semibold px-4 py-2 rounded-full hover:bg-blue-50">Sign In</a>
+                <a href="#" id="mobile-get-started-btn" class="block text-center mt-2 w-full bg-blue-500 text-white font-semibold px-5 py-2 rounded-full hover:bg-blue-600">Get Started</a>
+            </div>
+        </div>
+    </header>
+
+
+    <main class="bg-slate-50 min-h-screen">
+        <div class="container mx-auto px-6 pt-28 pb-16">
+            
+            <div class="mb-8">
+                <h1 class="text-3xl font-bold text-slate-800">Your Wellness Dashboard</h1>
+                <p class="text-slate-500 mt-1">Here’s a summary of your journey. Keep up the great work!</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                
+                <div class="lg:col-span-2 space-y-8">
+                    
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+                        <div class="bg-white p-6 rounded-2xl shadow-sm border flex items-center gap-5">
+                            <div class="bg-green-100 text-green-600 p-3 rounded-full"><i data-feather="smile"></i></div>
+                            <div>
+                                <p class="text-sm text-slate-500">Current Mood</p>
+                                <p class="text-xl font-bold text-slate-800">Feeling Okay 🙂</p>
+                            </div>
+                        </div>
+                        <div class="bg-white p-6 rounded-2xl shadow-sm border flex items-center gap-5">
+                            <div class="bg-blue-100 text-blue-600 p-3 rounded-full"><i data-feather="trending-up"></i></div>
+                            <div>
+                                <p class="text-sm text-slate-500">Active Streak</p>
+                                <p class="text-xl font-bold text-slate-800">12 Days</p>
+                            </div>
+                        </div>
+                        <div class="bg-white p-6 rounded-2xl shadow-sm border flex items-center gap-5">
+                            <div class="bg-violet-100 text-violet-600 p-3 rounded-full"><i data-feather="clock"></i></div>
+                            <div>
+                                <p class="text-sm text-slate-500">Mindful Minutes</p>
+                                <p class="text-xl font-bold text-slate-800">78 Mins</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border">
+                        <div class="flex justify-between items-center mb-4">
+                             <h2 class="text-xl font-bold text-slate-800">Your Mood Trend</h2>
+                             <select class="text-sm border-slate-200 rounded-md focus:ring-blue-500 focus:border-blue-500">
+                                 <option>Last 7 Days</option>
+                                 <option>Last 30 Days</option>
+                             </select>
+                        </div>
+                        <div>
+                            <canvas id="moodChart"></canvas>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h2 class="text-xl font-bold text-slate-800 mb-4">Recommended For You</h2>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="bg-white p-5 rounded-2xl shadow-sm border card-hover flex items-center gap-4">
+                                <img src="https://placehold.co/100x100/e0e7ff/4338ca" alt="Breathing" class="w-20 h-20 rounded-lg object-cover">
+                                <div>
+                                    <h3 class="font-semibold text-slate-800">5-Min Breathing</h3>
+                                    <p class="text-sm text-slate-500">A quick reset for a busy mind.</p>
+                                    <a href="index.html#mind-gym" class="text-sm font-semibold text-blue-600 hover:underline mt-2 inline-block">Start Now →</a>
+                                </div>
+                            </div>
+                             <div class="bg-white p-5 rounded-2xl shadow-sm border card-hover flex items-center gap-4">
+                                <img src="https://placehold.co/100x100/dcfce7/15803d" alt="Journaling" class="w-20 h-20 rounded-lg object-cover">
+                                <div>
+                                    <h3 class="font-semibold text-slate-800">Gratitude Journal</h3>
+                                    <p class="text-sm text-slate-500">Focus on the positive today.</p>
+                                    <a href="#" class="text-sm font-semibold text-blue-600 hover:underline mt-2 inline-block">Start Now →</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="lg:col-span-1 space-y-8">
+                    
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border h-full">
+                        <div class="flex justify-between items-center mb-4">
+                            <h2 class="text-xl font-bold text-slate-800">My Journal</h2>
+                            <button class="bg-blue-500 text-white font-semibold text-sm px-4 py-2 rounded-lg hover:bg-blue-600">+ New Entry</button>
+                        </div>
+                        <div class="space-y-4">
+                            <div class="bg-slate-50 p-4 rounded-lg">
+                                <p class="font-semibold text-slate-700">Feeling Hopeful</p>
+                                <p class="text-sm text-slate-500 mt-1 truncate">Had a great conversation with a friend today which really lifted my spirits...</p>
+                                <p class="text-xs text-slate-400 mt-2">Sep 17, 2025</p>
+                            </div>
+                            <div class="bg-slate-50 p-4 rounded-lg">
+                                <p class="font-semibold text-slate-700">A Little Overwhelmed</p>
+                                <p class="text-sm text-slate-500 mt-1 truncate">Assignments are piling up and it's starting to feel like a lot. Need to remember...</p>
+                                <p class="text-xs text-slate-400 mt-2">Sep 16, 2025</p>
+                            </div>
+                            <div class="bg-slate-50 p-4 rounded-lg">
+                                <p class="font-semibold text-slate-700">First Day with ChillSaathi</p>
+                                <p class="text-sm text-slate-500 mt-1 truncate">Just signed up. The breathing exercise was surprisingly calming. Let's see how this goes.</p>
+                                <p class="text-xs text-slate-400 mt-2">Sep 15, 2025</p>
+                            </div>
+                            <a href="#" class="text-sm font-semibold text-blue-600 hover:underline mt-4 block text-center">View All Entries</a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-slate-800 text-slate-300 py-16">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-lg font-bold text-white">🌿 ChillSaathi</h3>
+                    <p class="mt-2 text-sm text-slate-400">Your trusted companion for mental wellness. Providing stigma-free, confidential support for college students across India.</p>
+                </div>
+                 <div>
+                    <h4 class="font-semibold text-white">Quick Access</h4>
+                    <ul class="mt-4 space-y-2 text-sm">
+                        <li><a href="#" class="text-slate-400 hover:text-white">AI Support Chat</a></li>
+                        <li><a href="#" class="text-slate-400 hover:text-white">Mind Gym Activities</a></li>
+                        <li><a href="#" class="text-slate-400 hover:text-white">Peer Community</a></li>
+                        <li><a href="#" class="text-slate-400 hover:text-white">Resource Library</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-white">Need Help?</h4>
+                    <ul class="mt-4 space-y-2 text-sm">
+                        <li><a href="#" class="text-slate-400 hover:text-white">Emergency: 1075 (KIRAN)</a></li>
+                        <li><a href="#" class="text-slate-400 hover:text-white">24/7 Peer Support</a></li>
+                         <li><a href="#" class="text-slate-400 hover:text-white">Crisis Resources</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-white">Regional Support</h4>
+                     <ul class="mt-4 space-y-2 text-sm grid grid-cols-2">
+                        <li><a href="#" class="text-slate-400 hover:text-white">हिन्दी</a></li>
+                        <li><a href="#" class="text-slate-400 hover:text-white">ગુજરાતી</a></li>
+                        <li><a href="#" class="text-slate-400 hover:text-white">मराठी</a></li>
+                        <li><a href="#" class="text-slate-400 hover:text-white">தமிழ்</a></li>
+                     </ul>
+                </div>
+            </div>
+            <div class="mt-12 border-t border-slate-700 pt-8 text-center text-sm text-slate-400">
+                <p>&copy; 2025 ChillSaathi. All Rights Reserved. Built with ❤️ for student mental health.</p>
+            </div>
+        </div>
+    </footer>
+
+    <div id="auth-modal" class="fixed inset-0 z-[100] hidden" role="dialog" aria-modal="true">
+        <div id="auth-modal-backdrop" class="fixed inset-0 bg-black bg-opacity-50" aria-hidden="true"></div>
+        <div class="flex items-center justify-center min-h-screen p-4">
+            <div id="auth-modal-panel" class="relative bg-white rounded-2xl shadow-xl w-full max-w-md p-8 transform scale-95 opacity-0">
+                <button id="close-modal-btn" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600">
+                    <i data-feather="x"></i>
+                    <span class="sr-only">Close</span>
+                </button>
+                <div id="auth-modal-content"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        
+        feather.replace();
+
+        // Mobile Menu Logic
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        if (mobileMenuButton && mobileMenu) {
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+        }
+        
+        // Mobile Auth Button Logic
+        const mobileSignInBtn = document.getElementById('mobile-sign-in-btn');
+        const desktopSignInBtn = document.getElementById('sign-in-btn');
+        if (mobileSignInBtn && desktopSignInBtn) {
+            mobileSignInBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                desktopSignInBtn.click();
+            });
+        }
+        const mobileGetStartedBtn = document.getElementById('mobile-get-started-btn');
+        const desktopGetStartedBtn = document.getElementById('get-started-btn');
+        if (mobileGetStartedBtn && desktopGetStartedBtn) {
+            mobileGetStartedBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                desktopGetStartedBtn.click();
+            });
+        }
+
+        // Profile Dropdown Menu Logic
+        const profileMenuButton = document.getElementById('profile-menu-button');
+        const profileMenu = document.getElementById('profile-menu');
+
+        if (profileMenuButton && profileMenu) {
+            profileMenu.classList.add('is-hidden');
+
+            profileMenuButton.addEventListener('click', (event) => {
+                event.stopPropagation();
+                profileMenu.classList.toggle('is-hidden');
+                profileMenu.classList.toggle('is-visible');
+                feather.replace();
+            });
+
+            window.addEventListener('click', (event) => {
+                if (profileMenu.classList.contains('is-visible') && !profileMenu.contains(event.target) && !profileMenuButton.contains(event.target)) {
+                    profileMenu.classList.remove('is-visible');
+                    profileMenu.classList.add('is-hidden');
+                }
+            });
+        }
+
+        // --- Mood Chart Logic ---
+        const ctx = document.getElementById('moodChart');
+        if (ctx) {
+            const labels = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+            const moodData = [3, 4, 3, 5, 4, 2, 4];
+
+            const gradient = ctx.getContext('2d').createLinearGradient(0, 0, 0, 300);
+            gradient.addColorStop(0, 'rgba(59, 130, 246, 0.5)');
+            gradient.addColorStop(1, 'rgba(59, 130, 246, 0)');
+
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Mood Level',
+                        data: moodData,
+                        borderColor: '#3B82F6',
+                        backgroundColor: gradient,
+                        borderWidth: 3,
+                        pointBackgroundColor: '#3B82F6',
+                        pointBorderColor: '#ffffff',
+                        pointHoverRadius: 7,
+                        pointHoverBorderWidth: 3,
+                        pointRadius: 5,
+                        fill: true,
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 5,
+                            ticks: {
+                                stepSize: 1,
+                                callback: function(value, index, values) {
+                                    const moods = ['','Low','Stressed','Anxious','Okay','Great'];
+                                    return moods[value];
+                                }
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    }
+                }
+            });
+        }
+    </script>
+
+    <script type="module" src="backend.js"></script>
+</body>
+</html>

@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Help & Support - ChillSaathi</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/feather-icons"></script>
+  <style>
+    /* Extra Styling */
+    .faq-item {
+      transition: all 0.2s ease-in-out;
+    }
+    .faq-item:hover {
+      background-color: #f8fafc;
+    }
+    .faq-answer {
+      animation: slideDown 0.3s ease-in-out;
+    }
+    @keyframes slideDown {
+      from { opacity: 0; transform: translateY(-5px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    /* Modal animation */
+    #contact-modal.show .transform {
+      transform: scale(1);
+      opacity: 1;
+      transition: all 0.3s ease-in-out;
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800">
+
+  <!-- Help & Support Section -->
+  <section id="help-support" class="py-16">
+    <div class="container mx-auto px-6 max-w-2xl">
+      <h2 class="text-3xl font-bold mb-6">Help & Support</h2>
+
+      <!-- FAQ Accordion -->
+      <div class="space-y-4">
+        <div class="bg-white p-4 rounded-xl shadow-md settings-item cursor-pointer faq-item">
+          <div class="flex justify-between items-center">
+            <p class="font-semibold">How do I reset my password?</p>
+            <i data-feather="chevron-down" class="w-5 h-5 text-slate-400"></i>
+          </div>
+          <div class="faq-answer hidden mt-2 text-sm text-slate-600">
+            Go to <b>Account Settings > Security</b> and choose "Reset Password".
+          </div>
+        </div>
+
+        <div class="bg-white p-4 rounded-xl shadow-md settings-item cursor-pointer faq-item">
+          <div class="flex justify-between items-center">
+            <p class="font-semibold">Is my data private?</p>
+            <i data-feather="chevron-down" class="w-5 h-5 text-slate-400"></i>
+          </div>
+          <div class="faq-answer hidden mt-2 text-sm text-slate-600">
+            Yes ✅ Your data is encrypted and never shared with third parties.
+          </div>
+        </div>
+
+        <div class="bg-white p-4 rounded-xl shadow-md settings-item cursor-pointer faq-item">
+          <div class="flex justify-between items-center">
+            <p class="font-semibold">How do I contact support?</p>
+            <i data-feather="chevron-down" class="w-5 h-5 text-slate-400"></i>
+          </div>
+          <div class="faq-answer hidden mt-2 text-sm text-slate-600">
+            Use the contact form below or email us at <b>support@chillsaathi.com</b>.
+          </div>
+        </div>
+      </div>
+
+      <!-- Contact Support -->
+      <div class="mt-8">
+        <button id="open-contact-btn" 
+                class="w-full bg-blue-500 text-white font-semibold py-3 rounded-lg hover:bg-blue-600">
+          Contact Support
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Modal -->
+  <div id="contact-modal" 
+       class="fixed inset-0 bg-black/50 flex items-center justify-center hidden z-50">
+    <div class="bg-white rounded-2xl shadow-xl w-full max-w-md p-6 transform scale-95 transition-all">
+      <div class="flex justify-between items-center mb-4">
+        <h3 class="text-xl font-bold">Contact Support</h3>
+        <button id="close-contact-btn" class="text-slate-400 hover:text-slate-600">
+          <i data-feather="x"></i>
+        </button>
+      </div>
+      <form id="contact-form" class="space-y-4">
+        <div>
+          <label class="block text-sm font-semibold">Your Email</label>
+          <input type="email" required class="w-full border rounded-lg px-3 py-2 mt-1 focus:ring focus:ring-blue-200">
+        </div>
+        <div>
+          <label class="block text-sm font-semibold">Message</label>
+          <textarea rows="4" required class="w-full border rounded-lg px-3 py-2 mt-1 focus:ring focus:ring-blue-200"></textarea>
+        </div>
+        <button type="submit" 
+                class="w-full bg-blue-500 text-white font-semibold py-2 rounded-lg hover:bg-blue-600">
+          Send Message
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <footer class="bg-slate-800 text-slate-300 py-16">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-lg font-bold text-white">🌿 ChillSaathi</h3>
+                    <p class="mt-2 text-sm text-slate-400">Your trusted companion for mental wellness. Providing stigma-free, confidential support for college students across India.</p>
+                </div>
+                 <div>
+                    <h4 class="font-semibold text-white">Quick Access</h4>
+                    <ul class="mt-4 space-y-2 text-sm">
+                        <li><a href="#" class="text-slate-400 hover:text-white">AI Support Chat</a></li>
+                        <li><a href="#" class="text-slate-400 hover:text-white">Mind Gym Activities</a></li>
+                        <li><a href="#" class="text-slate-400 hover:text-white">Peer Community</a></li>
+                        <li><a href="#" class="text-slate-400 hover:text-white">Resource Library</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-white">Need Help?</h4>
+                    <ul class="mt-4 space-y-2 text-sm">
+                        <li><a href="#" class="text-slate-400 hover:text-white">Emergency: 1075 (KIRAN)</a></li>
+                        <li><a href="#" class="text-slate-400 hover:text-white">24/7 Peer Support</a></li>
+                         <li><a href="#" class="text-slate-400 hover:text-white">Crisis Resources</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-white">Regional Support</h4>
+                     <ul class="mt-4 space-y-2 text-sm grid grid-cols-2">
+                        <li><a href="#" class="text-slate-400 hover:text-white">हिन्दी</a></li>
+                        <li><a href="#" class="text-slate-400 hover:text-white">ગુજરાતી</a></li>
+                        <li><a href="#" class="text-slate-400 hover:text-white">मराठी</a></li>
+                        <li><a href="#" class="text-slate-400 hover:text-white">தமிழ்</a></li>
+                     </ul>
+                </div>
+            </div>
+            <div class="mt-12 border-t border-slate-700 pt-8 text-center text-sm text-slate-400">
+                <p>&copy; 2025 ChillSaathi. All Rights Reserved. Built with ❤️ for student mental health.</p>
+            </div>
+        </div>
+    </footer>
+
+  <!-- JS -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      feather.replace();
+
+      // Accordion FAQ
+      document.querySelectorAll(".faq-item").forEach(item => {
+        item.addEventListener("click", () => {
+          const answer = item.querySelector(".faq-answer");
+          const icon = item.querySelector("i[data-feather]");
+          if (answer.classList.contains("hidden")) {
+            answer.classList.remove("hidden");
+            icon.setAttribute("data-feather", "chevron-up");
+          } else {
+            answer.classList.add("hidden");
+            icon.setAttribute("data-feather", "chevron-down");
+          }
+          feather.replace();
+        });
+      });
+
+      // Contact Modal
+      const contactModal = document.getElementById("contact-modal");
+      const openBtn = document.getElementById("open-contact-btn");
+      const closeBtn = document.getElementById("close-contact-btn");
+      const form = document.getElementById("contact-form");
+
+      openBtn.addEventListener("click", () => {
+        contactModal.classList.remove("hidden");
+        setTimeout(() => contactModal.classList.add("show"), 10);
+      });
+
+      closeBtn.addEventListener("click", () => {
+        contactModal.classList.remove("show");
+        setTimeout(() => contactModal.classList.add("hidden"), 300);
+      });
+
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        alert("📩 Your message has been sent to support!");
+        contactModal.classList.remove("show");
+        setTimeout(() => contactModal.classList.add("hidden"), 300);
+      });
+    });
+  </script>
+</body>
+</html>

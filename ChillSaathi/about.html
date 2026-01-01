@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - ChillSaathi</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <script src="https://unpkg.com/feather-icons"></script>
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f7f9fc;
+        }
+
+        .gradient-text {
+            background: linear-gradient(to right, #2dd4bf, #3b82f6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-fill-color: transparent;
+        }
+
+        .subtle-bg-grid {
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23dbeafe' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+        
+        .fade-in-section {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+
+        .fade-in-section.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .card-hover {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+        }
+
+        /* MODIFICATION: Added CSS for profile menu */
+        .animated-gradient-background {
+            background: linear-gradient(90deg, #2dd4bf, #3b82f6, #818cf8, #2dd4bf);
+            background-size: 200% auto;
+            animation: gradient-flow 3s linear infinite;
+        }
+        @keyframes gradient-flow {
+            to {
+                background-position: 200% center;
+            }
+        }
+        #profile-menu {
+            transition: opacity 0.2s ease-out, transform 0.2s ease-out;
+        }
+        #profile-menu.is-hidden {
+            opacity: 0;
+            transform: translateY(0.5rem) scale(0.95);
+            pointer-events: none;
+        }
+        #profile-menu.is-visible {
+           opacity: 1;
+           transform: translateY(0) scale(1);
+        }
+    </style>
+</head>
+<body class="text-slate-700">
+
+  <header class="bg-white/80 backdrop-blur-lg fixed top-0 left-0 right-0 z-50 shadow-sm">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="index.html" class="text-2xl font-bold">
+                <span class="gradient-text">🌿 ChillSaathi</span>
+            </a>
+            <nav class="hidden md:flex items-center space-x-6">
+                <a href="index.html" class="hover:text-blue-500 transition-colors">Home</a>
+                <a href="index.html#mind-gym" class="hover:text-blue-500 transition-colors">Mind Gym</a>
+                <a href="community.html" class="hover:text-blue-500 transition-colors">Community</a>
+                <a href="booking.html" class="hover:text-blue-500 transition-colors">Consultation</a>
+                <a href="about.html" class="text-blue-600 font-semibold transition-colors">About Us</a>
+                <a href="games.html" class="block py-2">Fun Time</a>
+            </nav>
+            <div id="auth-container" class="hidden md:flex items-center space-x-2">
+                <div id="logged-out-view">
+                      <a href="#" id="sign-in-btn" class="text-blue-500 font-semibold px-4 py-2 rounded-full hover:bg-blue-50">Sign In</a>
+                      <a href="#" id="get-started-btn" class="bg-blue-500 text-white font-semibold px-5 py-2 rounded-full hover:bg-blue-600 shadow-md">Get Started</a>
+                </div>
+                
+                <div id="logged-in-view" class="hidden relative">
+                    <button id="profile-menu-button" type="button" class="animated-gradient-background flex items-center space-x-2 text-sm text-white font-semibold rounded-md shadow-lg hover:brightness-110 transition-all focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 px-4 py-2">
+                        <i data-feather="user" class="h-5 w-5"></i>
+                        <span>Profile</span>
+                    </button>
+                    
+                    <div id="profile-menu" class="origin-top-right absolute right-0 mt-2 w-56 rounded-lg shadow-xl bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
+                        <div class="px-4 py-3 border-b border-slate-200">
+                            <p class="text-sm font-medium text-slate-900">Signed in as</p>
+                            <p id="user-id-display" class="text-sm text-slate-500 truncate"></p>
+                        </div>
+                        
+                        <div class="py-1" role="none">
+                            <a href="/dashboard.html" class="group flex items-center gap-3 px-4 py-2 text-sm text-slate-700 hover:bg-blue-50 hover:text-blue-600 transition-colors" role="menuitem">
+                                <i data-feather="grid" class="w-4 h-4 text-slate-400 group-hover:text-blue-600 transition-colors"></i>
+                                <span>My Dashboard</span>
+                            </a>
+                            <a href="/settings.html" class="group flex items-center gap-3 px-4 py-2 text-sm text-slate-700 hover:bg-blue-50 hover:text-blue-600 transition-colors" role="menuitem">
+                                <i data-feather="settings" class="w-4 h-4 text-slate-400 group-hover:text-blue-600 transition-colors"></i>
+                                <span>Account Settings</span>
+                            </a>
+                            <a href="/help.html" class="group flex items-center gap-3 px-4 py-2 text-sm text-slate-700 hover:bg-blue-50 hover:text-blue-600 transition-colors" role="menuitem">
+                                <i data-feather="help-circle" class="w-4 h-4 text-slate-400 group-hover:text-blue-600 transition-colors"></i>
+                                <span>Help & Support</span>
+                            </a>
+                        </div>
+
+                        <div class="py-1 border-t border-slate-200" role="none">
+                            <button id="sign-out-btn" class="group w-full flex items-center gap-3 text-left px-4 py-2 text-sm text-slate-700 hover:bg-blue-50 hover:text-blue-600 transition-colors" role="menuitem">
+                                <i data-feather="log-out" class="w-4 h-4 text-slate-400 group-hover:text-blue-600 transition-colors"></i>
+                                <span>Sign Out</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+           </div>
+            <button id="mobile-menu-button" class="md:hidden"><i data-feather="menu"></i></button>
+        </div>
+        <div id="mobile-menu" class="hidden md:hidden px-6 pb-4">
+             <a href="index.html" class="block py-2">Home</a>
+             <a href="index.html#mind-gym" class="block py-2">Mind Gym</a>
+             <a href="community.html" class="block py-2">Community</a>
+             <a href="booking.html" class="block py-2">Consultation</a>
+             <a href="about.html" class="block py-2 font-semibold text-blue-600">About Us</a>
+             <a href="games.html" class="block py-2">Fun Time</a>
+             <div class="mt-4 border-t pt-4">
+                <a href="#" id="mobile-sign-in-btn" class="block text-center w-full text-blue-500 font-semibold px-4 py-2 rounded-full hover:bg-blue-50">Sign In</a>
+                <a href="#" id="mobile-get-started-btn" class="block text-center mt-2 w-full bg-blue-500 text-white font-semibold px-5 py-2 rounded-full hover:bg-blue-600">Get Started</a>
+             </div>
+        </div>
+    </header>
+
+            <div id="chatbot-container">
+    <button id="chatbot-toggle-btn" class="flex items-center justify-center">
+        <i data-feather="message-circle" class="w-8 h-8"></i>
+    </button>
+
+    <div id="chat-window">
+        <div class="chat-header">
+            <span>ChillSaathi AI</span>
+            <button id="chatbot-close-btn" class="p-1 rounded-full hover:bg-white/20">
+                <i data-feather="x" class="w-5 h-5"></i>
+            </button>
+        </div>
+        <div id="chat-messages" class="chat-messages">
+            <div class="bot-message chat-message">
+                Hi there! I'm your ChillSaathi AI. How can I support you today?
+            </div>
+        </div>
+        <div class="chat-input-container">
+            <form id="chat-form" class="chat-input">
+                <input type="text" id="chat-input-field" class="flex-grow px-4 py-2 border border-slate-300 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="Type your message...">
+                <button type="submit" class="bg-blue-500 text-white p-3 rounded-full hover:bg-blue-600">
+                    <i data-feather="send" class="w-5 h-5"></i>
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Chatbot Styles */
+    #chatbot-container {
+        position: fixed;
+        bottom: 2rem;
+        right: 2rem;
+        z-index: 1000;
+    }
+    #chatbot-toggle-btn {
+        background-color: #3b82f6;
+        color: white;
+        padding: 1rem;
+        border-radius: 9999px;
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        cursor: pointer;
+        transition: transform 0.3s ease;
+    }
+    #chatbot-toggle-btn:hover {
+        transform: scale(1.05);
+    }
+    #chat-window {
+        position: fixed;
+        bottom: 6rem;
+        right: 2rem;
+        width: 90vw;
+        max-width: 400px;
+        height: 70vh;
+        max-height: 600px;
+        background-color: white;
+        border-radius: 1.5rem;
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+        transform: translateY(20px) scale(0.95);
+        opacity: 0;
+        pointer-events: none;
+    }
+    #chat-window.open {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+        pointer-events: auto;
+    }
+    .chat-header {
+        background: linear-gradient(to right, #2dd4bf, #3b82f6);
+        color: white;
+        padding: 1.5rem;
+        font-weight: 600;
+        border-top-left-radius: 1.5rem;
+        border-top-right-radius: 1.5rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .chat-messages {
+        flex-grow: 1;
+        padding: 1rem;
+        overflow-y: auto;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+    .chat-messages::-webkit-scrollbar {
+        width: 8px;
+    }
+    .chat-messages::-webkit-scrollbar-track {
+        background: #f1f5f9; /* slate-100 */
+    }
+    .chat-messages::-webkit-scrollbar-thumb {
+        background: #cbd5e1; /* slate-300 */
+        border-radius: 4px;
+    }
+    .chat-messages::-webkit-scrollbar-thumb:hover {
+        background: #94a3b8; /* slate-400 */
+    }
+    .chat-message {
+        max-width: 85%;
+        padding: 0.75rem 1rem;
+        border-radius: 1.25rem;
+    }
+    .user-message {
+        background-color: #dbeafe; /* blue-100 */
+        align-self: flex-end;
+        border-bottom-right-radius: 0.25rem;
+    }
+    .bot-message {
+        background-color: #e2e8f0; /* slate-200 */
+        align-self: flex-start;
+        border-bottom-left-radius: 0.25rem;
+    }
+    .chat-input-container {
+        padding: 1rem;
+        border-top: 1px solid #e2e8f0;
+    }
+    .chat-input {
+        width: 100%;
+        display: flex;
+        gap: 0.5rem;
+    }
+    .typing-indicator span {
+        display: inline-block;
+        width: 8px;
+        height: 8px;
+        background-color: #94a3b8;
+        border-radius: 50%;
+        margin: 0 2px;
+        animation: bounce 1s infinite;
+    }
+    .typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
+    .typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
+    @keyframes bounce {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-5px); }
+    }
+</style>
+
+<script>
+    // --- Chatbot Logic ---
+    const chatToggleBtn = document.getElementById('chatbot-toggle-btn');
+    const chatCloseBtn = document.getElementById('chatbot-close-btn');
+    const chatWindow = document.getElementById('chat-window');
+    const chatMessages = document.getElementById('chat-messages');
+    const chatForm = document.getElementById('chat-form');
+    const chatInput = document.getElementById('chat-input-field');
+
+    let chatHistory = [];
+
+    function addMessage(text, isUser = false) {
+        const messageDiv = document.createElement('div');
+        messageDiv.classList.add('chat-message', isUser ? 'user-message' : 'bot-message');
+        messageDiv.textContent = text;
+        chatMessages.appendChild(messageDiv);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    function showTypingIndicator() {
+        const typingDiv = document.createElement('div');
+        typingDiv.classList.add('bot-message', 'chat-message', 'typing-indicator');
+        typingDiv.innerHTML = '<span></span><span></span><span></span>';
+        chatMessages.appendChild(typingDiv);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    function removeTypingIndicator() {
+        const typingIndicator = chatMessages.querySelector('.typing-indicator');
+        if (typingIndicator) {
+            typingIndicator.remove();
+        }
+    }
+
+    async function sendMessageToAI(prompt) {
+        showTypingIndicator();
+        const apiKey = "AIzaSyBIB49JwkxPjYX-BMlYV5pllwbxJCJHARw";
+        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+
+        chatHistory.push({ role: "user", parts: [{ text: prompt }] });
+
+        const payload = {
+            contents: chatHistory,
+            systemInstruction: {
+                parts: [{ text: "You are a friendly and supportive AI assistant named ChillSaathi. Your purpose is to help college students manage stress, anxiety, and academic pressure. Provide compassionate, encouraging, and helpful responses, but always advise them to seek professional help for serious issues. Keep responses concise and to the point." }]
+            }
+        };
+
+        let response;
+        try {
+            response = await fetch(apiUrl, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+
+            if (!response.ok) {
+                throw new Error(`API error: ${response.status} ${response.statusText}`);
+            }
+
+            const result = await response.json();
+            const botMessage = result.candidates[0].content.parts[0].text;
+
+            chatHistory.push({ role: "model", parts: [{ text: botMessage }] });
+
+            return botMessage;
+        } catch (error) {
+            console.error("Error communicating with AI:", error);
+            return "I'm sorry, I am unable to connect right now. Please try again later.";
+        } finally {
+            removeTypingIndicator();
+        }
+    }
+
+    // Use a more robust selector to handle Feather icons replacement
+    chatToggleBtn.addEventListener('click', () => {
+        chatWindow.classList.toggle('open');
+        const iconElement = chatToggleBtn.querySelector('svg');
+        if (iconElement) {
+            iconElement.setAttribute('data-feather', chatWindow.classList.contains('open') ? 'x' : 'message-circle');
+            feather.replace();
+        }
+    });
+
+    chatCloseBtn.addEventListener('click', () => {
+        chatWindow.classList.remove('open');
+        const iconElement = chatToggleBtn.querySelector('svg');
+        if (iconElement) {
+            iconElement.setAttribute('data-feather', 'message-circle');
+            feather.replace();
+        }
+    });
+
+    chatForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const userMessage = chatInput.value.trim();
+        if (userMessage) {
+            addMessage(userMessage, true);
+            chatInput.value = '';
+            const botResponse = await sendMessageToAI(userMessage);
+            addMessage(botResponse);
+        }
+    });
+
+    // Initialize chat history with the welcome message
+    chatHistory.push({ role: "model", parts: [{ text: "Hi there! I'm your ChillSaathi AI. How can I support you today?" }] });
+</script>
+
+    
+    <main class="pt-24">
+        <section class="py-16 bg-white subtle-bg-grid">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12 fade-in-section is-visible">
+                    <h1 class="text-4xl md:text-5xl font-extrabold text-slate-800">
+                        About <span class="gradient-text">ChillSaathi</span>
+                    </h1>
+                    <p class="mt-4 text-lg text-slate-500 max-w-2xl mx-auto">
+                        Your trusted companion for mental wellness, designed for college students by a team that understands.
+                    </p>
+                </div>
+                <div class="flex flex-col lg:flex-row items-center gap-12 fade-in-section">
+                    <div class="lg:w-1/2">
+                        <img src="/images/aboutus.png" alt="Person writing in a journal" class="w-full h-auto rounded-3xl shadow-xl border-4 border-white">
+                    </div>
+                    <div class="lg:w-1/2">
+                        <h2 class="text-2xl md:text-3xl font-bold text-slate-800">Our Mission</h2>
+                        <p class="mt-4 text-slate-600 leading-relaxed text-lg">
+                            ChillSaathi was born out of a desire to create a safe, accessible, and stigma-free space for college students to prioritize their mental well-being. We understand the unique pressures of student life—academic stress, social anxieties, and the challenges of self-discovery. Our platform provides a digital sanctuary where you can access instant AI-guided support, connect with peers who get it, and find science-backed resources to manage stress and build resilience.
+                        </p>
+                        <p class="mt-4 text-slate-600 leading-relaxed text-lg">
+                            We are committed to making mental health support as easy as a few clicks, empowering students to take control of their emotional and mental health journey. We believe that everyone deserves to feel calm, centered, and supported.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="py-16 bg-slate-100">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12 fade-in-section">
+                    <h2 class="text-3xl md:text-4xl font-bold text-slate-800">What Students Say</h2>
+                    <p class="mt-2 text-lg text-slate-500 max-w-2xl mx-auto">Hear from our community members about how ChillSaathi has made a difference in their lives.</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="bg-white p-6 rounded-2xl shadow-lg card-hover fade-in-section">
+    <div class="flex items-center mb-4">
+        <i data-feather="star" class="w-5 h-5 fill-amber-400 text-amber-400"></i>
+        <i data-feather="star" class="w-5 h-5 fill-amber-400 text-amber-400"></i>
+        <i data-feather="star" class="w-5 h-5 fill-amber-400 text-amber-400"></i>
+        <i data-feather="star" class="w-5 h-5 fill-amber-400 text-amber-400"></i>
+        <i data-feather="star" class="w-5 h-5 fill-amber-400 text-amber-400"></i>
+    </div>
+    <p class="text-slate-600 italic">
+        "The Mind Gym activities are perfect for a quick reset between classes. The breathing exercises have been a huge help in managing my anxiety during exams. Highly recommend!"
+    </p>
+    <div class="mt-4 text-right">
+        <span class="font-semibold text-slate-800">- Anjali S.</span>
+    </div>
+</div>
+
+<div class="bg-white p-6 rounded-2xl shadow-lg card-hover fade-in-section" style="transition-delay: 100ms;">
+     <div class="flex items-center mb-4">
+        <i data-feather="star" class="w-5 h-5 fill-amber-400 text-amber-400"></i>
+        <i data-feather="star" class="w-5 h-5 fill-amber-400 text-amber-400"></i>
+        <i data-feather="star" class="w-5 h-5 fill-amber-400 text-amber-400"></i>
+        <i data-feather="star" class="w-5 h-5 fill-amber-400 text-amber-400"></i>
+        <i data-feather="star" class="w-5 h-5 fill-amber-400 text-amber-400"></i>
+    </div>
+    <p class="text-slate-600 italic">
+        "I felt so alone with my struggles, but the community forums made me realize I'm not. The anonymous posting option is a game-changer. This app is truly a safe space."
+    </p>
+    <div class="mt-4 text-right">
+        <span class="font-semibold text-slate-800">- Rohan P.</span>
+    </div>
+</div>
+
+<div class="bg-white p-6 rounded-2xl shadow-lg card-hover fade-in-section" style="transition-delay: 200ms;">
+     <div class="flex items-center mb-4">
+        <i data-feather="star" class="w-5 h-5 fill-amber-400 text-amber-400"></i>
+        <i data-feather="star" class="w-5 h-5 fill-amber-400 text-amber-400"></i>
+        <i data-feather="star" class="w-5 h-5 fill-amber-400 text-amber-400"></i>
+        <i data-feather="star" class="w-5 h-5 fill-amber-400 text-amber-400"></i>
+        <i data-feather="star" class="w-5 h-5 fill-amber-400 text-amber-400"></i>
+    </div>
+    <p class="text-slate-600 italic">
+        "The AI support chat is surprisingly helpful. It's like having a kind and knowledgeable friend available 24/7. It's my first go-to whenever I feel overwhelmed."
+    </p>
+    <div class="mt-4 text-right">
+        <span class="font-semibold text-slate-800">- Sneha K.</span>
+    </div>
+</div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <footer class="bg-slate-800 text-slate-300 py-16">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-lg font-bold text-white">🌿 ChillSaathi</h3>
+                    <p class="mt-2 text-sm text-slate-400">Your trusted companion for mental wellness. Providing stigma-free, confidential support for college students across India.</p>
+                </div>
+                 <div>
+                    <h4 class="font-semibold text-white">Quick Access</h4>
+                    <ul class="mt-4 space-y-2 text-sm">
+                        <li><a href="#" class="text-slate-400 hover:text-white">AI Support Chat</a></li>
+                        <li><a href="#" class="text-slate-400 hover:text-white">Mind Gym Activities</a></li>
+                        <li><a href="#" class="text-slate-400 hover:text-white">Peer Community</a></li>
+                        <li><a href="#" class="text-slate-400 hover:text-white">Resource Library</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-white">Need Help?</h4>
+                    <ul class="mt-4 space-y-2 text-sm">
+                        <li><a href="#" class="text-slate-400 hover:text-white">Emergency: 1075 (KIRAN)</a></li>
+                        <li><a href="#" class="text-slate-400 hover:text-white">24/7 Peer Support</a></li>
+                         <li><a href="#" class="text-slate-400 hover:text-white">Crisis Resources</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-white">Regional Support</h4>
+                     <ul class="mt-4 space-y-2 text-sm grid grid-cols-2">
+                        <li><a href="#" class="text-slate-400 hover:text-white">हिन्दी</a></li>
+                        <li><a href="#" class="text-slate-400 hover:text-white">ગુજરાતી</a></li>
+                        <li><a href="#" class="text-slate-400 hover:text-white">मराठी</a></li>
+                        <li><a href="#" class="text-slate-400 hover:text-white">தமிழ்</a></li>
+                     </ul>
+                </div>
+            </div>
+            <div class="mt-12 border-t border-slate-700 pt-8 text-center text-sm text-slate-400">
+                <p>&copy; 2025 ChillSaathi. All Rights Reserved. Built with ❤️ for student mental health.</p>
+            </div>
+        </div>
+    </footer>
+
+
+    <div id="auth-modal" class="fixed inset-0 z-[100] hidden" role="dialog" aria-modal="true">
+        <div id="auth-modal-backdrop" class="fixed inset-0 bg-black bg-opacity-50" aria-hidden="true"></div>
+        <div class="flex items-center justify-center min-h-screen p-4">
+            <div id="auth-modal-panel" class="relative bg-white rounded-2xl shadow-xl w-full max-w-md p-8 transform scale-95 opacity-0">
+                <button id="close-modal-btn" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600">
+                    <i data-feather="x"></i>
+                    <span class="sr-only">Close</span>
+                </button>
+                <div id="auth-modal-content"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="backend.js" type="module"></script>
+
+    <script>
+        feather.replace();
+
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        const sections = document.querySelectorAll('.fade-in-section');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+        sections.forEach(section => { observer.observe(section); });
+
+        const mobileSignInBtn = document.getElementById('mobile-sign-in-btn');
+        const desktopSignInBtn = document.getElementById('sign-in-btn');
+        if (mobileSignInBtn && desktopSignInBtn) {
+            mobileSignInBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                desktopSignInBtn.click();
+            });
+        }
+
+        const mobileGetStartedBtn = document.getElementById('mobile-get-started-btn');
+        const desktopGetStartedBtn = document.getElementById('get-started-btn');
+        if (mobileGetStartedBtn && desktopGetStartedBtn) {
+            mobileGetStartedBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                desktopGetStartedBtn.click();
+            });
+        }
+
+        /* MODIFICATION: Added JavaScript for profile menu */
+        const profileMenuButton = document.getElementById('profile-menu-button');
+        const profileMenu = document.getElementById('profile-menu');
+
+        if (profileMenuButton && profileMenu) {
+            profileMenu.classList.add('is-hidden');
+
+            profileMenuButton.addEventListener('click', (event) => {
+                event.stopPropagation();
+                profileMenu.classList.toggle('is-hidden');
+                profileMenu.classList.toggle('is-visible');
+                feather.replace(); 
+            });
+
+            window.addEventListener('click', (event) => {
+                if (profileMenu.classList.contains('is-visible') && !profileMenu.contains(event.target) && !profileMenuButton.contains(event.target)) {
+                    profileMenu.classList.remove('is-visible');
+                    profileMenu.classList.add('is-hidden');
+                }
+            });
+        }
+    </script>
+</body>
+</html>

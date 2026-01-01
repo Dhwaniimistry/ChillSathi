@@ -1,0 +1,984 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>ChillSaathi — Relax & Play</title>
+
+</head>
+<body class="text-slate-700">
+
+    <header class="bg-white/80 backdrop-blur-lg fixed top-0 left-0 right-0 z-50 shadow-sm">
+    <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+        <a href="#" class="text-2xl font-bold">
+            <span class="gradient-text">🌿 ChillSaathi</span>
+        </a>
+        <nav class="hidden md:flex items-center space-x-6">
+           <a href="index.html" class="hover:text-blue-500 transition-colors">Home</a>
+                <a href="#mind-gym" class="hover:text-blue-500 transition-colors">Mind Gym</a>
+                <a href="community.html" class="hover:text-blue-500 transition-colors">Community</a>
+                <a href="booking.html" class="block py-2hover:text-blue-500 transition-colors">Consultation</a>
+                <a href="about.html" class="hover:text-blue-500 transition-colors">About Us</a>
+                  <a href="games.html" class="block py-2">Fun Time</a>
+            </nav>
+        </nav>
+        <div id="auth-container" class="hidden md:flex items-center space-x-2">
+            <div id="logged-out-view">
+                <a href="#" id="sign-in-btn" class="text-blue-500 font-semibold px-4 py-2 rounded-full hover:bg-blue-50">Sign In</a>
+                <a href="#" id="get-started-btn" class="bg-blue-500 text-white font-semibold px-5 py-2 rounded-full hover:bg-blue-600 shadow-md">Get Started</a>
+            </div>
+            
+            <div id="logged-in-view" class="hidden relative">
+                <button id="profile-menu-button" type="button" class="animated-gradient-background flex items-center space-x-2 text-sm text-white font-semibold rounded-md shadow-lg hover:brightness-110 transition-all focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 px-4 py-2">
+                    <i data-feather="user" class="h-5 w-5"></i>
+                    <span>Profile</span>
+                </button>
+                
+                <div id="profile-menu" class="origin-top-right absolute right-0 mt-2 w-56 rounded-lg shadow-xl bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
+                    <div class="px-4 py-3 border-b border-slate-200">
+                        <p class="text-sm font-medium text-slate-900">Signed in as</p>
+                        <p id="user-id-display" class="text-sm text-slate-500 truncate"></p>
+                    </div>
+                    
+                    <div class="py-1" role="none">
+                        <a href="/dashboard.html" class="group flex items-center gap-3 px-4 py-2 text-sm text-slate-700 hover:bg-blue-50 hover:text-blue-600 transition-colors" role="menuitem">
+                            <i data-feather="grid" class="w-4 h-4 text-slate-400 group-hover:text-blue-600 transition-colors"></i>
+                            <span>My Dashboard</span>
+                        </a>
+                        <a href="/settings.html" class="group flex items-center gap-3 px-4 py-2 text-sm text-slate-700 hover:bg-blue-50 hover:text-blue-600 transition-colors" role="menuitem">
+                            <i data-feather="settings" class="w-4 h-4 text-slate-400 group-hover:text-blue-600 transition-colors"></i>
+                            <span>Account Settings</span>
+                        </a>
+                        <a href="/help.html" class="group flex items-center gap-3 px-4 py-2 text-sm text-slate-700 hover:bg-blue-50 hover:text-blue-600 transition-colors" role="menuitem">
+                            <i data-feather="help-circle" class="w-4 h-4 text-slate-400 group-hover:text-blue-600 transition-colors"></i>
+                            <span>Help & Support</span>
+                        </a>
+    
+                    </div>
+
+                        <div class="py-1 border-t border-slate-200" role="none">
+                            <button id="sign-out-btn" class="group w-full flex items-center gap-3 text-left px-4 py-2 text-sm text-slate-700 hover:bg-blue-50 hover:text-blue-600 transition-colors" role="menuitem">
+                                <i data-feather="log-out" class="w-4 h-4 text-slate-400 group-hover:text-blue-600 transition-colors"></i>
+                                <span>Sign Out</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button id="mobile-menu-button" class="md:hidden"><i data-feather="menu"></i></button>
+    </div>
+    <div id="mobile-menu" class="hidden md:hidden px-6 pb-4">
+        <a href="index.html" class="block py-2">Home</a>
+        <a href="#mind-gym" class="block py-2">Mind Gym</a>
+        <a href="community.html" class="block py-2">Community</a>
+        <a href="booking.html" class="block py-2">Consultation</a>
+        <a href="about.html" class="block py-2">About Us</a>
+         <a href="games.html" class="block py-2">Fun Time</a>
+        <div class="mt-4 border-t pt-4">
+            <a href="#" class="block text-center w-full text-blue-500 font-semibold px-4 py-2 rounded-full hover:bg-blue-50">Sign In</a>
+            <a href="#" class="block text-center mt-2 w-full bg-blue-500 text-white font-semibold px-5 py-2 rounded-full hover:bg-blue-600">Get Started</a>
+        </div>
+    </div>
+</header>
+
+        <div id="chatbot-container">
+    <button id="chatbot-toggle-btn" class="flex items-center justify-center">
+        <i data-feather="message-circle" class="w-8 h-8"></i>
+    </button>
+
+    <div id="chat-window">
+        <div class="chat-header">
+            <span>ChillSaathi AI</span>
+            <button id="chatbot-close-btn" class="p-1 rounded-full hover:bg-white/20">
+                <i data-feather="x" class="w-5 h-5"></i>
+            </button>
+        </div>
+        <div id="chat-messages" class="chat-messages">
+            <div class="bot-message chat-message">
+                Hi there! I'm your ChillSaathi AI. How can I support you today?
+            </div>
+        </div>
+        <div class="chat-input-container">
+            <form id="chat-form" class="chat-input">
+                <input type="text" id="chat-input-field" class="flex-grow px-4 py-2 border border-slate-300 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="Type your message...">
+                <button type="submit" class="bg-blue-500 text-white p-3 rounded-full hover:bg-blue-600">
+                    <i data-feather="send" class="w-5 h-5"></i>
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Chatbot Styles */
+    #chatbot-container {
+        position: fixed;
+        bottom: 2rem;
+        right: 2rem;
+        z-index: 1000;
+    }
+    #chatbot-toggle-btn {
+        background-color: #3b82f6;
+        color: white;
+        padding: 1rem;
+        border-radius: 9999px;
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        cursor: pointer;
+        transition: transform 0.3s ease;
+    }
+    #chatbot-toggle-btn:hover {
+        transform: scale(1.05);
+    }
+    #chat-window {
+        position: fixed;
+        bottom: 6rem;
+        right: 2rem;
+        width: 90vw;
+        max-width: 400px;
+        height: 70vh;
+        max-height: 600px;
+        background-color: white;
+        border-radius: 1.5rem;
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+        transform: translateY(20px) scale(0.95);
+        opacity: 0;
+        pointer-events: none;
+    }
+    #chat-window.open {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+        pointer-events: auto;
+    }
+    .chat-header {
+        background: linear-gradient(to right, #2dd4bf, #3b82f6);
+        color: white;
+        padding: 1.5rem;
+        font-weight: 600;
+        border-top-left-radius: 1.5rem;
+        border-top-right-radius: 1.5rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .chat-messages {
+        flex-grow: 1;
+        padding: 1rem;
+        overflow-y: auto;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+    .chat-messages::-webkit-scrollbar {
+        width: 8px;
+    }
+    .chat-messages::-webkit-scrollbar-track {
+        background: #f1f5f9; /* slate-100 */
+    }
+    .chat-messages::-webkit-scrollbar-thumb {
+        background: #cbd5e1; /* slate-300 */
+        border-radius: 4px;
+    }
+    .chat-messages::-webkit-scrollbar-thumb:hover {
+        background: #94a3b8; /* slate-400 */
+    }
+    .chat-message {
+        max-width: 85%;
+        padding: 0.75rem 1rem;
+        border-radius: 1.25rem;
+    }
+    .user-message {
+        background-color: #dbeafe; /* blue-100 */
+        align-self: flex-end;
+        border-bottom-right-radius: 0.25rem;
+    }
+    .bot-message {
+        background-color: #e2e8f0; /* slate-200 */
+        align-self: flex-start;
+        border-bottom-left-radius: 0.25rem;
+    }
+    .chat-input-container {
+        padding: 1rem;
+        border-top: 1px solid #e2e8f0;
+    }
+    .chat-input {
+        width: 100%;
+        display: flex;
+        gap: 0.5rem;
+    }
+    .typing-indicator span {
+        display: inline-block;
+        width: 8px;
+        height: 8px;
+        background-color: #94a3b8;
+        border-radius: 50%;
+        margin: 0 2px;
+        animation: bounce 1s infinite;
+    }
+    .typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
+    .typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
+    @keyframes bounce {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-5px); }
+    }
+</style>
+
+<script>
+    // --- Chatbot Logic ---
+    const chatToggleBtn = document.getElementById('chatbot-toggle-btn');
+    const chatCloseBtn = document.getElementById('chatbot-close-btn');
+    const chatWindow = document.getElementById('chat-window');
+    const chatMessages = document.getElementById('chat-messages');
+    const chatForm = document.getElementById('chat-form');
+    const chatInput = document.getElementById('chat-input-field');
+
+    let chatHistory = [];
+
+    function addMessage(text, isUser = false) {
+        const messageDiv = document.createElement('div');
+        messageDiv.classList.add('chat-message', isUser ? 'user-message' : 'bot-message');
+        messageDiv.textContent = text;
+        chatMessages.appendChild(messageDiv);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    function showTypingIndicator() {
+        const typingDiv = document.createElement('div');
+        typingDiv.classList.add('bot-message', 'chat-message', 'typing-indicator');
+        typingDiv.innerHTML = '<span></span><span></span><span></span>';
+        chatMessages.appendChild(typingDiv);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    function removeTypingIndicator() {
+        const typingIndicator = chatMessages.querySelector('.typing-indicator');
+        if (typingIndicator) {
+            typingIndicator.remove();
+        }
+    }
+
+    async function sendMessageToAI(prompt) {
+        showTypingIndicator();
+        const apiKey = "AIzaSyBIB49JwkxPjYX-BMlYV5pllwbxJCJHARw";
+        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+
+        chatHistory.push({ role: "user", parts: [{ text: prompt }] });
+
+        const payload = {
+            contents: chatHistory,
+            systemInstruction: {
+                parts: [{ text: "You are a friendly and supportive AI assistant named ChillSaathi. Your purpose is to help college students manage stress, anxiety, and academic pressure. Provide compassionate, encouraging, and helpful responses, but always advise them to seek professional help for serious issues. Keep responses concise and to the point." }]
+            }
+        };
+
+        let response;
+        try {
+            response = await fetch(apiUrl, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+
+            if (!response.ok) {
+                throw new Error(`API error: ${response.status} ${response.statusText}`);
+            }
+
+            const result = await response.json();
+            const botMessage = result.candidates[0].content.parts[0].text;
+
+            chatHistory.push({ role: "model", parts: [{ text: botMessage }] });
+
+            return botMessage;
+        } catch (error) {
+            console.error("Error communicating with AI:", error);
+            return "I'm sorry, I am unable to connect right now. Please try again later.";
+        } finally {
+            removeTypingIndicator();
+        }
+    }
+
+    // Use a more robust selector to handle Feather icons replacement
+    chatToggleBtn.addEventListener('click', () => {
+        chatWindow.classList.toggle('open');
+        const iconElement = chatToggleBtn.querySelector('svg');
+        if (iconElement) {
+            iconElement.setAttribute('data-feather', chatWindow.classList.contains('open') ? 'x' : 'message-circle');
+            feather.replace();
+        }
+    });
+
+    chatCloseBtn.addEventListener('click', () => {
+        chatWindow.classList.remove('open');
+        const iconElement = chatToggleBtn.querySelector('svg');
+        if (iconElement) {
+            iconElement.setAttribute('data-feather', 'message-circle');
+            feather.replace();
+        }
+    });
+
+    chatForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const userMessage = chatInput.value.trim();
+        if (userMessage) {
+            addMessage(userMessage, true);
+            chatInput.value = '';
+            const botResponse = await sendMessageToAI(userMessage);
+            addMessage(botResponse);
+        }
+    });
+
+    // Initialize chat history with the welcome message
+    chatHistory.push({ role: "model", parts: [{ text: "Hi there! I'm your ChillSaathi AI. How can I support you today?" }] });
+</script>
+
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/feather-icons"></script>
+
+  <style>
+    /* --- Core design pieces taken from your index.css for consistent look --- */
+    body { font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; background-color: #f7f9fc; color: #0f172a; }
+    .gradient-text { background: linear-gradient(to right, #2dd4bf, #3b82f6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .animated-gradient-text { background: linear-gradient(90deg, #2dd4bf, #3b82f6, #818cf8, #2dd4bf); background-size: 200% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent; animation: text-shine 3s linear infinite; }
+    @keyframes text-shine { to { background-position: 200% center; } }
+
+    .subtle-bg-grid { background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23dbeafe' fill-opacity='0.18'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E"); }
+
+    .card-hover { transition: transform .28s ease, box-shadow .28s ease; }
+    .card-hover:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(2,6,23,0.08); }
+
+    .puzzle-tile { transition: all .18s ease-in-out; font-weight: 700; font-size: 1.25rem; cursor: pointer; user-select: none; }
+    .puzzle-empty { background-color: #f3f4f6 !important; cursor: default; box-shadow: none !important; }
+    .progress-bar-inner { transition: width .5s ease-in-out; }
+
+    /* modal */
+    #modal { transition: opacity .2s ease; }
+    #modal .modal-panel { transition: transform .22s ease, opacity .22s ease; }
+
+    /* Memory cards */
+    .mem-card { width: 72px; height: 72px; display:flex; align-items:center; justify-content:center; border-radius: 12px; cursor:pointer; user-select:none; font-size: 28px; }
+    .mem-card.back { background: linear-gradient(180deg,#e0f2fe,#dbeafe); color: transparent; }
+    .mem-card.front { background: linear-gradient(180deg,#fff,#f8fafc); box-shadow: 0 6px 18px rgba(2,6,23,0.06); }
+    .mem-card.matched { box-shadow: 0 8px 24px rgba(59,130,246,0.12); transform: scale(1.03); }
+
+    /* Balloon canvas */
+    #balloon-canvas { border-radius: 12px; background: linear-gradient(180deg,#eef8ff,#f0f9ff); display:block; }
+
+    /* Flow game grid */
+    .flow-cell { width: 40px; height: 40px; border: 1px solid rgba(2,6,23,0.06); display:flex; align-items:center; justify-content:center; }
+    .dot { width: 18px; height: 18px; border-radius: 9999px; }
+    .flow-grid { display:grid; gap:4px; background: rgba(255,255,255,0.8); padding:8px; border-radius:10px; box-shadow:0 6px 18px rgba(2,6,23,.06); }
+
+    /* Small responsive tweaks */
+    @media (min-width: 1024px) {
+      .mem-card { width:84px; height:84px; font-size:32px; border-radius:14px; }
+    }
+  </style>
+</head>
+
+<body class="text-slate-700">
+
+  <!-- Hero (you asked for "Relax & Play – Your Chill Zone") -->
+  <section class="py-16 subtle-bg-grid">
+    <div class="container mx-auto px-6 text-center"><br>
+        <br>
+        <br>
+      <h1 class="text-4xl md:text-5xl font-extrabold animated-gradient-text">Relax & Play – Your Chill Zone</h1><br>
+      <p class="mt-4 text-lg text-slate-600 max-w-2xl mx-auto">Pick a calming game, take a short mental break, and come back refreshed. All games are intentionally gentle & soothing.</p>
+    </div>
+  </section>
+  <!-- Games grid -->
+  <section id="games" class="py-8 container mx-auto px-6">
+    <h2 class="text-2xl font-bold mb-6">Games to unwind with</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <!-- Memory -->
+      <div class="bg-white rounded-2xl p-6 card-hover text-center">
+        <div class="text-6xl mb-4">🧠</div>
+        <h3 class="font-semibold text-lg">Memory Match</h3>
+        <p class="text-sm text-slate-500 mt-2">Flip cards, find pairs — calming and satisfying.</p>
+        <button class="mt-4 w-full bg-blue-500 text-white py-2 rounded-full" data-game="memory">Play</button>
+      </div>
+
+      <!-- Puzzle -->
+      <div class="bg-white rounded-2xl p-6 card-hover text-center">
+        <div class="text-6xl mb-4">🧩</div>
+        <h3 class="font-semibold text-lg">Peaceful Puzzles</h3>
+        <p class="text-sm text-slate-500 mt-2">3×3 sliding puzzle — slow and focused play.</p>
+        <button class="mt-4 w-full bg-green-500 text-white py-2 rounded-full" data-game="puzzle">Play</button>
+      </div>
+
+      <!-- Balloon -->
+      <div class="bg-white rounded-2xl p-6 card-hover text-center">
+        <div class="text-6xl mb-4">🎈</div>
+        <h3 class="font-semibold text-lg">Pop Your Stress Away</h3>
+        <p class="text-sm text-slate-500 mt-2">Click balloons to pop — simple and satisfying.</p>
+        <button class="mt-4 w-full bg-red-500 text-white py-2 rounded-full" data-game="balloon">Play</button>
+      </div>
+
+      <!-- Flow -->
+      <div class="bg-white rounded-2xl p-6 card-hover text-center">
+        <div class="text-6xl mb-4">🌀</div>
+        <h3 class="font-semibold text-lg">Flow State</h3>
+        <p class="text-sm text-slate-500 mt-2">Connect matching dots without crossing lines.</p>
+        <button class="mt-4 w-full bg-purple-500 text-white py-2 rounded-full" data-game="flow">Play</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Videos section -->
+  <section id="videos" class="py-12 container mx-auto px-6">
+    <h2 class="text-2xl font-bold mb-6">Videos for your soul</h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="bg-white rounded-2xl p-6 card-hover text-center">
+        <div class="text-6xl mb-4">🌧️</div>
+        <h4 class="font-semibold">Calming Rain & Forest Sounds</h4>
+        <p class="text-sm text-slate-500 mt-2">A peaceful background to relax to.</p>
+        <button class="mt-4 w-full bg-slate-200 text-slate-700 py-2 rounded-full" data-video="rain">Open</button>
+      </div>
+
+      <div class="bg-white rounded-2xl p-6 card-hover text-center">
+        <div class="text-6xl mb-4">🧘</div>
+        <h4 class="font-semibold">Mindful Moments</h4>
+        <p class="text-sm text-slate-500 mt-2">An encouraging short animation.</p>
+        <button class="mt-4 w-full bg-slate-200 text-slate-700 py-2 rounded-full" data-video="mindful">Open</button>
+      </div>
+
+      <div class="bg-white rounded-2xl p-6 card-hover text-center">
+        <div class="text-6xl mb-4">🏡</div>
+        <h4 class="font-semibold">Cozy Home Decor — DIY</h4>
+        <p class="text-sm text-slate-500 mt-2">Gentle home projects for a cozy space.</p>
+        <button class="mt-4 w-full bg-slate-200 text-slate-700 py-2 rounded-full" data-video="diy">Open</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Modal (single modal used for games & videos) -->
+  <div id="modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50 p-4">
+    <div class="modal-panel bg-white rounded-2xl w-full max-w-4xl max-h-[90vh] overflow-hidden shadow-2xl flex flex-col">
+      <div class="flex items-center justify-between p-4 border-b">
+        <h3 id="modal-title" class="text-xl font-bold">Play</h3>
+        <button id="modal-close" class="text-slate-500 text-2xl">&times;</button>
+      </div>
+      <div id="modal-body" class="p-6 overflow-auto"></div>
+    </div>
+  </div>
+
+  <script>
+    /* ---------- Utility & modal wiring ---------- */
+    document.addEventListener('DOMContentLoaded', () => {
+      feather.replace();
+
+      // open modal helpers
+      const modal = document.getElementById('modal');
+      const modalBody = document.getElementById('modal-body');
+      const modalTitle = document.getElementById('modal-title');
+      const modalClose = document.getElementById('modal-close');
+      let gameAnimationHandle = null; // used to cancel any RAF loops
+      let balloonInterval = null;
+
+      function openModal(title, contentBuilder) {
+        // clear running things
+        stopAllActiveGames();
+
+        modalTitle.textContent = title;
+        modalBody.innerHTML = '';
+        contentBuilder(modalBody);
+        modal.classList.remove('hidden');
+      }
+      function closeModal() {
+        stopAllActiveGames();
+        modal.classList.add('hidden');
+        modalBody.innerHTML = '';
+      }
+      function stopAllActiveGames() {
+        if (gameAnimationHandle) {
+          cancelAnimationFrame(gameAnimationHandle);
+          gameAnimationHandle = null;
+        }
+        if (balloonInterval) {
+          clearInterval(balloonInterval);
+          balloonInterval = null;
+        }
+      }
+
+      modalClose.addEventListener('click', closeModal);
+      modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+
+      // wire game buttons
+      document.querySelectorAll('[data-game]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const game = btn.getAttribute('data-game');
+          switch (game) {
+            case 'memory': openModal('Memory Match', buildMemoryGame); break;
+            case 'puzzle': openModal('Peaceful Puzzle', buildSlidingPuzzle); break;
+            case 'flow': openModal('Flow State', buildFlowGame); break;
+            case 'balloon': openModal('Balloon Pop', buildBalloonGame); break;
+          }
+        });
+      });
+
+      // wire video buttons (no autoplay)
+      document.querySelectorAll('[data-video]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const id = btn.getAttribute('data-video');
+          if (id === 'rain') openModal('Calming Rain', (c) => {
+            c.innerHTML = `<div class="prose max-w-none"><p class="mb-4">A calm audio-visual — click Play to view on YouTube.</p>
+              <div class="aspect-w-16 aspect-h-9"><iframe width="100%" height="420" src="https://www.youtube.com/embed/eKFTSSKCzWA" frameborder="0" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div></div>`;
+          });
+          if (id === 'mindful') openModal('Mindful Moments', (c) => {
+            c.innerHTML = `<p class="mb-4">A short mindful animation. (Placeholder)</p><div class="rounded-lg bg-slate-50 p-6">Video coming soon — add your embed here.</div>`;
+          });
+          if (id === 'diy') openModal('Cozy Home Decor', (c) => {
+            c.innerHTML = `<p class="mb-4">DIY ideas to make your space feel cozier. (Placeholder)</p><div class="rounded-lg bg-slate-50 p-6">Video coming soon — add your embed here.</div>`;
+          });
+        });
+      });
+
+      /* ---------- MEMORY MATCH ---------- */
+      function buildMemoryGame(container) {
+        const status = document.createElement('div');
+        status.className = 'mb-4 font-semibold';
+        container.appendChild(status);
+
+        const grid = document.createElement('div');
+        grid.style.display = 'grid';
+        grid.style.gridTemplateColumns = 'repeat(4, minmax(0,1fr))';
+        grid.style.gap = '12px';
+        container.appendChild(grid);
+
+        const emojis = ["🧠","🧘","❤️","✨","☀️","🌙","🌊","🌲"];
+        let deck = [...emojis, ...emojis].sort(() => Math.random() - 0.5);
+        let firstEl = null, secondEl = null, lock = false, moves = 0, matches = 0;
+
+        function updateStatus() { status.textContent = `Moves: ${moves} • Matches: ${matches}`; }
+
+        deck.forEach(symbol => {
+          const card = document.createElement('div');
+          card.className = 'mem-card back';
+          card.textContent = ''; // back side
+          card.dataset.symbol = symbol;
+          card.addEventListener('click', () => {
+            if (lock || card.classList.contains('matched') || card === firstEl) return;
+            // reveal
+            card.classList.remove('back');
+            card.classList.add('front');
+            card.textContent = symbol;
+
+            if (!firstEl) {
+              firstEl = card;
+              return;
+            }
+            // second pick
+            secondEl = card;
+            moves++;
+            updateStatus();
+            if (firstEl.dataset.symbol === secondEl.dataset.symbol) {
+              // match
+              firstEl.classList.add('matched');
+              secondEl.classList.add('matched');
+              matches++;
+              firstEl = null; secondEl = null;
+              updateStatus();
+              if (matches === emojis.length) {
+                const win = document.createElement('div');
+                win.className = 'mt-6 text-lg font-semibold';
+                win.textContent = `You won in ${moves} moves — nice! 🎉`;
+                container.appendChild(win);
+              }
+            } else {
+              lock = true;
+              setTimeout(() => {
+                [firstEl, secondEl].forEach(el => {
+                  if (!el.classList.contains('matched')) {
+                    el.classList.remove('front');
+                    el.classList.add('back');
+                    el.textContent = '';
+                  }
+                });
+                firstEl = null; secondEl = null; lock = false;
+              }, 700);
+            }
+          });
+          grid.appendChild(card);
+        });
+        updateStatus();
+      }
+
+      /* ---------- SLIDING PUZZLE (3x3) ---------- */
+      function buildSlidingPuzzle(container) {
+        let size = 3;
+        let tiles = [];
+        let moves = 0;
+        const status = document.createElement('div'); status.className = 'mb-4 font-semibold';
+        container.appendChild(status);
+
+        const board = document.createElement('div');
+        board.className = 'grid';
+        board.style.gridTemplateColumns = `repeat(${size}, 1fr)`;
+        board.style.gap = '8px';
+        board.style.maxWidth = '360px';
+        container.appendChild(board);
+
+        function isSolvable(arr) {
+          const flat = arr.filter(x => x !== null);
+          let inv = 0;
+          for (let i = 0; i < flat.length; i++) for (let j = i+1; j < flat.length; j++) if (flat[i] > flat[j]) inv++;
+          return inv % 2 === 0;
+        }
+
+        function init() {
+          tiles = [];
+          for (let i = 1; i <= size*size -1; i++) tiles.push(i);
+          tiles.push(null);
+          do {
+            tiles.sort(() => Math.random() - 0.5);
+          } while (!isSolvable(tiles));
+          moves = 0; render(); updateStatus();
+        }
+        function updateStatus(){ status.textContent = `Moves: ${moves}`; }
+        function render() {
+          board.innerHTML = '';
+          tiles.forEach((val, idx) => {
+            const cell = document.createElement('div');
+            cell.className = 'p-4 flex items-center justify-center bg-white rounded-lg shadow-sm puzzle-tile';
+            cell.style.width = '96px'; cell.style.height='96px';
+            if (val === null) {
+              cell.classList.add('puzzle-empty'); cell.textContent = '';
+            } else {
+              cell.textContent = val;
+              cell.addEventListener('click', () => tryMove(idx));
+            }
+            board.appendChild(cell);
+          });
+        }
+        function tryMove(i) {
+          const emptyIndex = tiles.indexOf(null);
+          const r1 = Math.floor(i/size), c1 = i%size;
+          const r2 = Math.floor(emptyIndex/size), c2 = emptyIndex%size;
+          if (Math.abs(r1-r2) + Math.abs(c1-c2) === 1) {
+            [tiles[i], tiles[emptyIndex]] = [tiles[emptyIndex], tiles[i]];
+            moves++; render(); updateStatus(); checkWin();
+          }
+        }
+        function checkWin() {
+          for (let i =0; i< tiles.length-1; i++) if (tiles[i] !== i+1) return;
+          const win = document.createElement('div'); win.className='mt-4 text-lg font-semibold'; win.textContent = `Solved in ${moves} moves — well done! 🎉`;
+          container.appendChild(win);
+        }
+
+        // restart button
+        const controls = document.createElement('div'); controls.className = 'mt-4 flex gap-2';
+        const restart = document.createElement('button'); restart.className='bg-blue-500 text-white px-4 py-2 rounded-full'; restart.textContent='Restart';
+        restart.addEventListener('click', () => { init(); });
+        controls.appendChild(restart); container.appendChild(controls);
+
+        init();
+      }
+      
+
+      /* ---------- BALLOON POP ---------- */
+      function buildBalloonGame(container) {
+        const scoreEl = document.createElement('div'); scoreEl.className = 'mb-4 font-semibold'; scoreEl.textContent = 'Score: 0';
+        container.appendChild(scoreEl);
+        const canvas = document.createElement('canvas'); canvas.width = Math.min(820, window.innerWidth - 160); canvas.height = 420;
+        canvas.id = 'balloon-canvas';
+        container.appendChild(canvas);
+        const ctx = canvas.getContext('2d');
+
+        let balloons = [];
+        let score = 0;
+        function spawnBalloon() {
+          const r = 18 + Math.random()*18;
+          balloons.push({ x: Math.random()*(canvas.width - 2*r) + r, y: canvas.height + r + Math.random()*80, r, speed: 0.7 + Math.random()*1.6, color: randomColor() });
+        }
+        function randomColor() {
+          const cols = ['#ef4444','#f97316','#f59e0b','#84cc16','#06b6d4','#6366f1','#a78bfa'];
+          return cols[Math.floor(Math.random()*cols.length)];
+        }
+        function animate() {
+          ctx.clearRect(0,0,canvas.width,canvas.height);
+          // rise and draw
+          for (let i = balloons.length-1; i>=0; i--) {
+            const b = balloons[i];
+            b.y -= b.speed;
+            // string
+            ctx.beginPath();
+            ctx.moveTo(b.x, b.y + b.r);
+            ctx.lineTo(b.x, b.y + b.r + 14);
+            ctx.strokeStyle = 'rgba(0,0,0,0.06)';
+            ctx.stroke();
+            // balloon
+            ctx.beginPath();
+            ctx.arc(b.x, b.y, b.r, 0, Math.PI*2);
+            ctx.fillStyle = b.color; ctx.fill();
+            // small shine
+            ctx.beginPath(); ctx.arc(b.x - b.r*0.35, b.y - b.r*0.35, b.r*0.28, 0, Math.PI*2); ctx.fillStyle = 'rgba(255,255,255,0.35)'; ctx.fill();
+            // remove when offscreen
+            if (b.y + b.r < -20) balloons.splice(i,1);
+          }
+          gameAnimationHandle = requestAnimationFrame(animate);
+        }
+        // clicking to pop
+        canvas.addEventListener('click', (e) => {
+          const rect = canvas.getBoundingClientRect();
+          const mx = e.clientX - rect.left, my = e.clientY - rect.top;
+          for (let i = balloons.length -1; i>=0; i--) {
+            const b = balloons[i];
+            const d = Math.hypot(mx - b.x, my - b.y);
+            if (d <= b.r) {
+              // pop
+              balloons.splice(i,1);
+              score += 10;
+              scoreEl.textContent = `Score: ${score}`;
+              // small pop animation (simple circle)
+              ctx.beginPath();
+              ctx.arc(mx, my, 24, 0, Math.PI*2);
+              ctx.fillStyle = 'rgba(255,255,255,0.6)'; ctx.fill();
+              break;
+            }
+          }
+        });
+        // spawn interval
+        balloonInterval = setInterval(spawnBalloon, 650);
+        spawnBalloon(); spawnBalloon();
+        animate();
+
+        // cleanup when modal closes handled by stopAllActiveGames()
+      }
+
+      /* ---------- FLOW STATE (connect-the-dots) ---------- */
+      function buildFlowGame(container) {
+        // We'll make a small 5x5 level with 3 color pairs
+        const size = 5;
+        const level = {
+          size,
+          pairs: [
+            { color:'#ef4444', a:[0,0], b:[4,2] }, // red
+            { color:'#3b82f6', a:[1,2], b:[3,4] }, // blue
+            { color:'#22c55e', a:[0,4], b:[4,4] }  // green
+          ]
+        };
+
+        const status = document.createElement('div'); status.className='mb-4 font-semibold'; status.textContent='Connect the matching dots';
+        container.appendChild(status);
+
+        // wrapper for grid + canvas
+        const wrapper = document.createElement('div'); wrapper.style.display='flex'; wrapper.style.gap='20px'; wrapper.className='flex flex-wrap items-start';
+        container.appendChild(wrapper);
+
+        // grid element
+        const gridWrap = document.createElement('div'); gridWrap.className='flow-grid';
+        const grid = document.createElement('div'); grid.style.display='grid'; grid.style.gridTemplateColumns = `repeat(${size}, 40px)`; grid.style.gridTemplateRows = `repeat(${size}, 40px)`; grid.style.gap='4px';
+        gridWrap.appendChild(grid);
+        wrapper.appendChild(gridWrap);
+
+        // canvas overlay for lines
+        const canvasWrap = document.createElement('div'); canvasWrap.style.position='relative';
+        const canvas = document.createElement('canvas'); canvas.width = size*44; canvas.height = size*44; canvas.style.position='absolute'; canvas.style.left='0'; canvas.style.top='0'; canvas.style.pointerEvents='none';
+        canvasWrap.appendChild(canvas);
+        gridWrap.appendChild(canvasWrap);
+        const ctx = canvas.getContext('2d');
+
+        // create grid state
+        const state = Array.from({length:size}, ()=> Array(size).fill(null));
+        const paths = {}; // color -> list of positions
+        level.pairs.forEach(p => { state[p.a[0]][p.a[1]] = { type:'dot', color:p.color }; state[p.b[0]][p.b[1]] = { type:'dot', color:p.color }; paths[p.color] = []; });
+
+        // Build cells
+        function cellIndex(r,c){ return r*size + c; }
+        for (let r=0;r<size;r++){
+          for (let c=0;c<size;c++){
+            const cell = document.createElement('div');
+            cell.className='flow-cell';
+            cell.style.width='40px'; cell.style.height='40px'; cell.style.display='flex'; cell.style.alignItems='center'; cell.style.justifyContent='center';
+            cell.dataset.r = r; cell.dataset.c = c;
+            const s = state[r][c];
+            if (s && s.type === 'dot') {
+              const dot = document.createElement('div'); dot.className='dot'; dot.style.background = s.color; cell.appendChild(dot);
+            }
+            grid.appendChild(cell);
+          }
+        }
+
+        // drawing helpers
+        function drawPaths() {
+          ctx.clearRect(0,0,canvas.width,canvas.height);
+          ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+          for (const color in paths) {
+            const p = paths[color];
+            if (p.length < 2) continue;
+            ctx.strokeStyle = color; ctx.lineWidth = 14;
+            ctx.beginPath();
+            const cx = (p[0][1]*44)+22, cy = (p[0][0]*44)+22;
+            ctx.moveTo(cx, cy);
+            for (let i =1;i<p.length;i++){
+              const [rr,cc] = p[i];
+              ctx.lineTo(cc*44 + 22, rr*44 + 22);
+            }
+            ctx.stroke();
+          }
+        }
+
+        // drawing interactions (mouse & touch)
+        let drawing = false, curColor = null, curPath = null;
+        function getCellFromEvent(e) {
+          const rect = grid.getBoundingClientRect();
+          const clientX = (e.touches ? e.touches[0].clientX : e.clientX);
+          const clientY = (e.touches ? e.touches[0].clientY : e.clientY);
+          const x = clientX - rect.left, y = clientY - rect.top;
+          const c = Math.floor(x / 44), r = Math.floor(y / 44);
+          if (r < 0 || r >= size || c < 0 || c >= size) return null;
+          return { r, c };
+        }
+
+        grid.addEventListener('mousedown', (e) => {
+          const pos = getCellFromEvent(e); if (!pos) return;
+          const s = state[pos.r][pos.c];
+          if (s && s.type === 'dot') {
+            drawing = true; curColor = s.color; curPath = [[pos.r,pos.c]];
+            // clear any prior path for this color visually and logically
+            paths[curColor] = [[pos.r,pos.c]];
+            drawPaths();
+          }
+        });
+        grid.addEventListener('mousemove', (e) => {
+          if (!drawing) return;
+          const pos = getCellFromEvent(e); if (!pos) return;
+          const last = curPath[curPath.length-1];
+          if (pos.r === last[0] && pos.c === last[1]) return;
+          // must be adjacent
+          const manh = Math.abs(pos.r - last[0]) + Math.abs(pos.c - last[1]);
+          if (manh !== 1) return;
+          // cannot step on other color dot unless it's same color end
+          const existing = state[pos.r][pos.c];
+          const alreadyInPath = curPath.some(p => p[0] === pos.r && p[1] === pos.c);
+          if (alreadyInPath) return;
+          // if cell contains other color path — forbid (simple rule)
+          let blocked = false;
+          for (const color in paths) {
+            if (color === curColor) continue;
+            if (paths[color].some(p => p[0] === pos.r && p[1] === pos.c)) { blocked = true; break; }
+          }
+          if (blocked) return;
+          // append
+          curPath.push([pos.r,pos.c]); paths[curColor] = curPath.slice();
+          drawPaths();
+        });
+
+        // support touch
+        grid.addEventListener('touchstart', (e) => {
+          const pos = getCellFromEvent(e); if (!pos) return;
+          const s = state[pos.r][pos.c];
+          if (s && s.type === 'dot') {
+            drawing = true; curColor = s.color; curPath = [[pos.r,pos.c]]; paths[curColor] = [[pos.r,pos.c]]; drawPaths();
+          }
+        }, { passive:false });
+        grid.addEventListener('touchmove', (e) => {
+          e.preventDefault();
+          if (!drawing) return;
+          const pos = getCellFromEvent(e); if (!pos) return;
+          const last = curPath[curPath.length-1];
+          if (pos.r === last[0] && pos.c === last[1]) return;
+          const manh = Math.abs(pos.r - last[0]) + Math.abs(pos.c - last[1]);
+          if (manh !== 1) return;
+          const alreadyInPath = curPath.some(p => p[0] === pos.r && p[1] === pos.c);
+          if (alreadyInPath) return;
+          let blocked = false;
+          for (const color in paths) {
+            if (color === curColor) continue;
+            if (paths[color].some(p => p[0] === pos.r && p[1] === pos.c)) { blocked = true; break; }
+          }
+          if (blocked) return;
+          curPath.push([pos.r,pos.c]); paths[curColor] = curPath.slice(); drawPaths();
+        }, { passive:false });
+
+        window.addEventListener('mouseup', finishDrawing);
+        window.addEventListener('touchend', finishDrawing);
+
+        function finishDrawing() {
+          if (!drawing) return;
+          drawing = false;
+          // check if last position is the target dot of same color
+          const p = paths[curColor];
+          if (!p || p.length < 2) { paths[curColor] = []; drawPaths(); curColor = null; curPath = null; return; }
+          const last = p[p.length-1];
+          // check if it's the other dot
+          const pair = level.pairs.find(pp => pp.color === curColor);
+          if (pair && ((last[0] === pair.b[0] && last[1] === pair.b[1]) || (last[0] === pair.a[0] && last[1] === pair.a[1]))) {
+            // good, mark path permanent (state update)
+            p.forEach(([rr,cc]) => { state[rr][cc] = { type:'path', color:curColor }; });
+            // write path to paths (already there)
+          } else {
+            // not completed, clear
+            paths[curColor] = [];
+          }
+          curColor = null; curPath = null;
+          drawPaths(); checkFlowWin();
+        }
+
+        function checkFlowWin() {
+          // win: all pairs connected and grid cells occupied only by paths/dots of same color or empty allowed
+          const allComplete = level.pairs.every(pair => {
+            return paths[pair.color] && paths[pair.color].length > 1 && (
+              (paths[pair.color].some(p => p[0] === pair.a[0] && p[1] === pair.a[1])) &&
+              (paths[pair.color].some(p => p[0] === pair.b[0] && p[1] === pair.b[1]))
+            );
+          });
+          if (allComplete) {
+            status.textContent = 'Level Complete! 🎉';
+          }
+        }
+
+        // initial draw for canvas size
+        drawPaths();
+      }
+
+    }); // DOMContentLoaded end
+  </script>
+
+   <footer class="bg-slate-800 text-slate-300 py-16">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-lg font-bold text-white">🌿 ChillSaathi</h3>
+                    <p class="mt-2 text-sm text-slate-400">Your trusted companion for mental wellness. Providing stigma-free, confidential support for college students across India.</p>
+                </div>
+                 <div>
+                    <h4 class="font-semibold text-white">Quick Access</h4>
+                    <ul class="mt-4 space-y-2 text-sm">
+                        <li><a href="#" class="text-slate-400 hover:text-white">AI Support Chat</a></li>
+                        <li><a href="#" class="text-slate-400 hover:text-white">Mind Gym Activities</a></li>
+                        <li><a href="#" class="text-slate-400 hover:text-white">Peer Community</a></li>
+                        <li><a href="#" class="text-slate-400 hover:text-white">Resource Library</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-white">Need Help?</h4>
+                    <ul class="mt-4 space-y-2 text-sm">
+                        <li><a href="#" class="text-slate-400 hover:text-white">Emergency: 1075 (KIRAN)</a></li>
+                        <li><a href="#" class="text-slate-400 hover:text-white">24/7 Peer Support</a></li>
+                         <li><a href="#" class="text-slate-400 hover:text-white">Crisis Resources</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-white">Regional Support</h4>
+                     <ul class="mt-4 space-y-2 text-sm grid grid-cols-2">
+                        <li><a href="#" class="text-slate-400 hover:text-white">हिन्दी</a></li>
+                        <li><a href="#" class="text-slate-400 hover:text-white">ગુજરાતી</a></li>
+                        <li><a href="#" class="text-slate-400 hover:text-white">मराठी</a></li>
+                        <li><a href="#" class="text-slate-400 hover:text-white">தமிழ்</a></li>
+                     </ul>
+                </div>
+            </div>
+            <div class="mt-12 border-t border-slate-700 pt-8 text-center text-sm text-slate-400">
+                <p>&copy; 2025 ChillSaathi. All Rights Reserved. Built with ❤️ for student mental health.</p>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>

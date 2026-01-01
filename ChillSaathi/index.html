@@ -1,0 +1,2025 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChillSaathi - Your Mental Wellness Companion</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <script src="https://unpkg.com/feather-icons"></script>
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f7f9fc;
+        }
+
+        .subtle-bg-grid {
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23dbeafe' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+        
+        #hero {
+            position: relative;
+            overflow: hidden; /* This is important to contain the SVG */
+        }
+
+        #hero-waves {
+            position: absolute;
+            top: -10%;
+            left: -20%;
+            width: 140%;
+            height: 150%;
+            z-index: 0;
+            transform: rotate(-15deg);
+        }
+
+        #hero-waves-extra {
+            position: absolute;
+            bottom: -20%;
+            left: -35%;
+            width: 140%;
+            height: 140%;
+            z-index: 1; /* Position it above the main wave */
+            transform: rotate(25deg);
+        }
+
+        .affirmation-corner {
+            position: absolute;
+            top: 12vh;
+            left: 8vw;
+            z-index: 5;
+            width: 300px;
+            height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .mood-aura {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: var(--aura-color, rgba(167, 139, 250, 0.3));
+            filter: blur(50px);
+            animation: pulse-glow-1 20s infinite ease-in-out;
+            transition: background 1s ease;
+        }
+
+        .wave-path {
+            animation: wave-flow 25s ease-in-out infinite alternate;
+        }
+
+        #wave-2 { animation-delay: -5s; animation-duration: 30s; }
+        #wave-3 { animation-delay: -10s; animation-duration: 36s; }
+
+        @keyframes wave-flow {
+            from {
+                transform: translateX(-5%) translateY(-3%);
+            }
+            to {
+                transform: translateX(5%) translateY(3%);
+            }
+        }
+
+        .gradient-text {
+            background: linear-gradient(to right, #2dd4bf, #3b82f6);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-fill-color: transparent;
+        }
+
+        .animated-gradient-text {
+            background: linear-gradient(90deg, #2dd4bf, #3b82f6, #818cf8, #2dd4bf);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: text-shine 3s linear infinite;
+        }
+
+        @keyframes text-shine {
+            to {
+                background-position: 200% center;
+            }
+        }
+
+        @keyframes hover-float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .mood-card {
+            position: relative;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            animation: hover-float 8s ease-in-out infinite;
+        }
+
+        .mood-card:hover {
+            transform: scale(1.08) !important;
+            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.15), 0 8px 10px -6px rgb(0 0 0 / 0.15) !important;
+            animation-play-state: paused;
+        }
+        
+        .mood-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 0.75rem; 
+            z-index: -1;
+            background: var(--glow-color);
+            filter: blur(20px);
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+
+        .mood-card:hover::before {
+            opacity: 0.7;
+        }
+
+        .card-hover {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+        }
+
+        .mood-check-container {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .mood-check-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 3px;
+            height: 150px;
+            background: linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.7), transparent);
+            border-radius: 3px;
+            animation: shimmer-light 5s ease-in-out infinite;
+        }
+        
+        @keyframes shimmer-light {
+            0% { transform: translateY(-50%); opacity: 0.5; }
+            50% { transform: translateY(calc(100% + 50px)); opacity: 1; }
+            100% { transform: translateY(calc(200% + 100px)); opacity: 0.5; }
+        }
+
+
+        /* New Aura Breathing Animation */
+        .aura-center, .aura-outer {
+            transform-origin: center;
+            transition: all 4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .is-breathing-in .aura-center {
+            transform: scale(1.1);
+            filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.5));
+        }
+        .is-breathing-in .aura-outer {
+            transform: scale(1.15);
+            opacity: 0.6;
+            stroke-width: 1;
+        }
+        
+        .is-breathing-out .aura-center {
+            transform: scale(0.9);
+            filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.2));
+        }
+        .is-breathing-out .aura-outer {
+            transform: scale(0.85);
+            opacity: 0.2;
+            stroke-width: 2.5;
+        }
+        
+        .progress-bar-inner {
+            transition: width 0.5s ease-in-out;
+        }
+
+        .fade-in-section {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+
+        .fade-in-section.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .breathing-module-container {
+            position: relative;
+            overflow: hidden;
+            background: #1e3a8a; /* Deep blue base */
+        }
+
+        .breathing-module-container::before,
+        .breathing-module-container::after {
+            content: '';
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            z-index: 0;
+        }
+
+        .breathing-module-container::before {
+            width: 300px;
+            height: 300px;
+            background: rgba(56, 189, 248, 0.4); /* Light Blue */
+            top: -100px;
+            left: -100px;
+            animation: pulse-glow-1 15s infinite alternate ease-in-out;
+        }
+        
+        .breathing-module-container::after {
+            width: 400px;
+            height: 400px;
+            background: rgba(167, 139, 250, 0.4); /* Soft Purple */
+            bottom: -150px;
+            right: -150px;
+            animation: pulse-glow-2 18s infinite alternate ease-in-out;
+        }
+
+        @keyframes pulse-glow-1 {
+            0% { transform: translate(0, 0) scale(1); }
+            25% { transform: translate(10px, -15px) scale(1.05); }
+            50% { transform: translate(-10px, 10px) scale(0.95); }
+            75% { transform: translate(5px, 15px) scale(1.05); }
+            100% { transform: translate(0, 0) scale(1); }
+        }
+
+        @keyframes pulse-glow-2 {
+            from { transform: scale(1.1) translate(0, 0); }
+            to { transform: scale(0.9) translate(-20px, -20px); }
+        }
+
+        .breathing-module-container > * {
+            position: relative;
+            z-index: 1;
+        }
+
+        .animated-gradient-background {
+            background: linear-gradient(90deg, #2dd4bf, #3b82f6, #818cf8, #2dd4bf);
+            background-size: 200% auto;
+            animation: gradient-flow 3s linear infinite;
+        }
+
+
+        @keyframes gradient-flow {
+            to {
+            background-position: 200% center;
+            }
+        }
+
+        #mind-gym {
+            position: relative;
+            overflow: hidden;
+        }
+
+        #mind-gym-waves {
+            position: absolute;
+            top: -25%;
+            right: -25%;
+            width: 150%;
+            height: 150%;
+            z-index: 0;
+            transform: rotate(15deg);
+        }
+
+        #mind-gym .content-wrapper {
+            position: relative;
+            z-index: 1;
+        }
+
+        #auth-modal-backdrop {
+            transition: opacity 0.3s ease-in-out;
+        }
+        #auth-modal-panel {
+            transition: all 0.3s ease-in-out;
+        }
+
+        #profile-menu {
+           /* Base styles for the transition */
+            transition: opacity 0.2s ease-out, transform 0.2s ease-out;
+        }
+
+        #profile-menu.is-hidden {
+          /* State when the menu is hidden */
+            opacity: 0;
+            transform: translateY(0.5rem) scale(0.95);
+            pointer-events: none; /* Prevents interaction when hidden */
+        }
+
+        #profile-menu.is-visible {
+           /* State when the menu is visible */
+           opacity: 1;
+           transform: translateY(0) scale(1);
+        }
+
+    </style>
+</head>
+<body class="text-slate-700">
+
+    <header class="bg-white/80 backdrop-blur-lg fixed top-0 left-0 right-0 z-50 shadow-sm">
+    <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+        <a href="#" class="text-2xl font-bold">
+            <span class="gradient-text">🌿 ChillSaathi</span>
+        </a>
+        <nav class="hidden md:flex items-center space-x-6">
+           <a href="index.html" class="hover:text-blue-500 transition-colors">Home</a>
+                <a href="#mind-gym" class="hover:text-blue-500 transition-colors">Mind Gym</a>
+                <a href="community.html" class="hover:text-blue-500 transition-colors">Community</a>
+                <a href="booking.html" class="block py-2hover:text-blue-500 transition-colors">Consultation</a>
+                <a href="about.html" class="hover:text-blue-500 transition-colors">About Us</a>
+                  <a href="games.html" class="block py-2">Fun Time</a>
+            </nav>
+        </nav>
+        <div id="auth-container" class="hidden md:flex items-center space-x-2">
+            <div id="logged-out-view">
+                <a href="#" id="sign-in-btn" class="text-blue-500 font-semibold px-4 py-2 rounded-full hover:bg-blue-50">Sign In</a>
+                <a href="#" id="get-started-btn" class="bg-blue-500 text-white font-semibold px-5 py-2 rounded-full hover:bg-blue-600 shadow-md">Get Started</a>
+            </div>
+            
+            <div id="logged-in-view" class="hidden relative">
+                <button id="profile-menu-button" type="button" class="animated-gradient-background flex items-center space-x-2 text-sm text-white font-semibold rounded-md shadow-lg hover:brightness-110 transition-all focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 px-4 py-2">
+                    <i data-feather="user" class="h-5 w-5"></i>
+                    <span>Profile</span>
+                </button>
+                
+                <div id="profile-menu" class="origin-top-right absolute right-0 mt-2 w-56 rounded-lg shadow-xl bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
+                    <div class="px-4 py-3 border-b border-slate-200">
+                        <p class="text-sm font-medium text-slate-900">Signed in as</p>
+                        <p id="user-id-display" class="text-sm text-slate-500 truncate"></p>
+                    </div>
+                    
+                    <div class="py-1" role="none">
+                        <a href="/dashboard.html" class="group flex items-center gap-3 px-4 py-2 text-sm text-slate-700 hover:bg-blue-50 hover:text-blue-600 transition-colors" role="menuitem">
+                            <i data-feather="grid" class="w-4 h-4 text-slate-400 group-hover:text-blue-600 transition-colors"></i>
+                            <span>My Dashboard</span>
+                        </a>
+                        <a href="/settings.html" class="group flex items-center gap-3 px-4 py-2 text-sm text-slate-700 hover:bg-blue-50 hover:text-blue-600 transition-colors" role="menuitem">
+                            <i data-feather="settings" class="w-4 h-4 text-slate-400 group-hover:text-blue-600 transition-colors"></i>
+                            <span>Account Settings</span>
+                        </a>
+                        <a href="/help.html" class="group flex items-center gap-3 px-4 py-2 text-sm text-slate-700 hover:bg-blue-50 hover:text-blue-600 transition-colors" role="menuitem">
+                            <i data-feather="help-circle" class="w-4 h-4 text-slate-400 group-hover:text-blue-600 transition-colors"></i>
+                            <span>Help & Support</span>
+                        </a>
+    
+                    </div>
+
+                        <div class="py-1 border-t border-slate-200" role="none">
+                            <button id="sign-out-btn" class="group w-full flex items-center gap-3 text-left px-4 py-2 text-sm text-slate-700 hover:bg-blue-50 hover:text-blue-600 transition-colors" role="menuitem">
+                                <i data-feather="log-out" class="w-4 h-4 text-slate-400 group-hover:text-blue-600 transition-colors"></i>
+                                <span>Sign Out</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button id="mobile-menu-button" class="md:hidden"><i data-feather="menu"></i></button>
+    </div>
+    <div id="mobile-menu" class="hidden md:hidden px-6 pb-4">
+        <a href="index.html" class="block py-2">Home</a>
+        <a href="#mind-gym" class="block py-2">Mind Gym</a>
+        <a href="community.html" class="block py-2">Community</a>
+        <a href="booking.html" class="block py-2">Consultation</a>
+        <a href="about.html" class="block py-2">About Us</a>
+         <a href="games.html" class="block py-2">Fun Time</a>
+        <div class="mt-4 border-t pt-4">
+            <a href="#" class="block text-center w-full text-blue-500 font-semibold px-4 py-2 rounded-full hover:bg-blue-50">Sign In</a>
+            <a href="#" class="block text-center mt-2 w-full bg-blue-500 text-white font-semibold px-5 py-2 rounded-full hover:bg-blue-600">Get Started</a>
+        </div>
+    </div>
+</header>
+
+    <main>
+
+        <section id="hero" class="min-h-screen flex items-center pt-24">
+            <div class="affirmation-corner">
+                <div id="mood-aura" class="mood-aura"></div>
+            </div>
+
+            <svg id="hero-waves" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 1024">
+                <defs>
+                    <linearGradient id="waveGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" style="stop-color: rgba(165, 243, 252, 0.7)" />
+                        <stop offset="100%" style="stop-color: rgba(199, 210, 254, 0.7)" />
+                    </linearGradient>
+                </defs>
+                <path id="wave-1" class="wave-path" fill="url(#waveGradient)" d="M-200 475 C 200 375, 400 575, 800 475 S 1200 575, 1640 475 L 1640 1024 L -200 1024 Z" opacity="0.6" />
+                <path id="wave-2" class="wave-path" fill="url(#waveGradient)" d="M-200 515 C 250 615, 450 415, 800 515 S 1250 415, 1640 515 L 1640 1024 L -200 1024 Z" opacity="0.4" />
+                <path id="wave-3" class="wave-path" fill="url(#waveGradient)" d="M-200 555 C 300 505, 500 705, 800 595 S 1300 505, 1640 555 L 1640 1024 L -200 1024 Z" opacity="0.2" />
+            </svg>
+
+            <svg id="hero-waves-extra" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 1024">
+                <defs>
+                    <linearGradient id="waveGradientExtra" x1="0%" y1="100%" x2="100%" y2="0%">
+                        <stop offset="0%" style="stop-color: rgba(199, 210, 254, 0.8)" /> <stop offset="50%" style="stop-color: rgba(251, 191, 219, 0.6)" /> <stop offset="100%" style="stop-color: rgba(165, 243, 252, 0)" /> </linearGradient>
+                </defs>
+                <path class="wave-path" fill="url(#waveGradientExtra)" d="M0 700 C 400 600, 600 850, 1000 750 S 1400 850, 1440 700 V 1024 H 0 Z" style="animation-duration: 22s; animation-delay: -3s;"/>
+            </svg>
+
+            <div class="container mx-auto px-6 relative z-10">
+                <div class="flex flex-col lg:flex-row items-center justify-between gap-12">
+                    <div class="lg:w-1/2 text-center lg:text-left">
+                        <h1 class="text-4xl md:text-6xl font-extrabold text-slate-800 leading-tight">
+                            Your <span class="animated-gradient-text">Chill Buddy</span> for Stress Relief
+                        </h1>
+                        <p class="mt-6 text-lg md:text-xl text-slate-600 max-w-xl mx-auto lg:mx-0">
+                            A safe, stigma-free digital space for college students. Get AI-guided support, connect with peers, and access wellness resources anytime, anywhere.
+                        </p>
+                        <div class="mt-8 flex justify-center lg:justify-start items-center gap-4">
+                            <a href="journey.html" class="bg-blue-500 text-white font-semibold px-6 py-3 rounded-full hover:bg-blue-600 shadow-lg">Start Your Journey</a>
+                            <a href="join.html" class="bg-white text-slate-700 font-semibold px-6 py-3 rounded-full hover:bg-slate-100 shadow-lg border">Join Community</a>
+                        </div>
+                        <div class="mt-10 flex flex-wrap justify-center lg:justify-start gap-x-6 gap-y-2 text-sm text-slate-500">
+                            <span class="flex items-center gap-2"> <i data-feather="zap" class="w-4 h-4 text-green-500"></i> 24/7 AI Support </span>
+                            <span class="flex items-center gap-2"> <i data-feather="shield" class="w-4 h-4 text-blue-500"></i> Safe & Confidential </span>
+                            <span class="flex items-center gap-2"> <i data-feather="gift" class="w-4 h-4 text-pink-500"></i> Free For Students </span>
+                        </div>
+                    </div>
+                    <div class="lg:w-1/2 w-full flex justify-center items-center">
+                        <div class="mood-check-container bg-white/50 backdrop-blur-xl p-8 sm:p-12 rounded-3xl border border-white/30 shadow-2xl w-full max-w-lg">
+                            <div id="mood-check-initial-view">
+                                <div class="text-center mb-6">
+                                    <h2 class="text-2xl font-bold text-slate-800">How are you feeling today?</h2>
+                                    <p class="text-slate-500 mt-1">Take a quick mood check-in to get personalized support.</p>
+                                </div>
+                                <div id="mood-buttons-grid" class="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                                    <button data-mood="great" class="mood-card bg-white border-2 border-green-400 p-4 rounded-xl text-center" style="--glow-color: rgba(74, 222, 128, 0.7);"> <span class="text-4xl">😊</span> <span class="mt-2 block font-semibold text-green-800">Great</span> </button>
+                                    <button data-mood="okay" class="mood-card bg-white border-2 border-cyan-400 p-4 rounded-xl text-center" style="animation-delay: -1.5s; --glow-color: rgba(34, 211, 238, 0.7);"> <span class="text-4xl">🙂</span> <span class="mt-2 block font-semibold text-cyan-800">Okay</span> </button>
+                                    <button data-mood="calm" class="mood-card bg-white border-2 border-violet-400 p-4 rounded-xl text-center" style="animation-delay: -3s; --glow-color: rgba(167, 139, 250, 0.7);"> <span class="text-4xl">😌</span> <span class="mt-2 block font-semibold text-violet-800">Calm</span> </button>
+                                    <button data-mood="anxious" class="mood-card bg-white border-2 border-amber-400 p-4 rounded-xl text-center" style="animation-delay: -5s; --glow-color: rgba(251, 191, 36, 0.7);"> <span class="text-4xl">😟</span> <span class="mt-2 block font-semibold text-amber-800">Anxious</span> </button>
+                                    <button data-mood="stressed" class="mood-card bg-white border-2 border-red-400 p-4 rounded-xl text-center" style="animation-delay: -2.2s; --glow-color: rgba(248, 113, 113, 0.7);"> <span class="text-4xl">😥</span> <span class="mt-2 block font-semibold text-red-800">Stressed</span> </button>
+                                    <button data-mood="low" class="mood-card bg-white border-2 border-blue-500 p-4 rounded-xl text-center" style="animation-delay: -6s; --glow-color: rgba(59, 130, 246, 0.7);"> <span class="text-4xl">😔</span> <span class="mt-2 block font-semibold text-blue-800">Low</span> </button>
+                                </div>
+                            </div>
+                            <div id="mood-check-feedback-view" class="hidden text-center">
+                                <i data-feather="check-circle" class="w-16 h-16 mx-auto text-green-500"></i>
+                                <h2 class="text-2xl font-bold text-slate-800 mt-4">Thanks for checking in!</h2>
+                                <p class="text-slate-500 mt-2">Your mood has been logged. Remember to take a moment for yourself today.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="features" class="py-20 bg-white subtle-bg-grid">
+             <div class="container mx-auto px-6">
+                <div class="text-center mb-16 fade-in-section">
+                    <h2 class="text-3xl md:text-4xl font-bold text-slate-800">Everything You Need for <span class="gradient-text">Mental Wellness</span></h2>
+                    <p class="mt-4 text-lg text-slate-500 max-w-2xl mx-auto">Comprehensive tools and support systems designed specifically for college students' mental health needs.</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                     <div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover fade-in-section"> <img src="/images/aisupport.jpg" alt="AI Support" class="w-full h-48 object-cover"><div class="p-6"><div class="flex items-center gap-3"><div class="bg-green-100 text-green-600 p-2 rounded-lg"><i data-feather="cpu"></i></div><h3 class="text-xl font-bold">AI-Guided Support</h3></div><p class="mt-3 text-slate-500">Instant, compassionate AI support trained with coping strategies and crisis intervention.</p><a href="#" class="text-blue-500 font-semibold mt-4 inline-block hover:underline">Learn More →</a></div></div>
+                    <div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover fade-in-section" style="transition-delay:100ms"> <img src="/images/mindgym.jpg" alt="Mind Gym" class="w-full h-48 object-cover"><div class="p-6"><div class="flex items-center gap-3"><div class="bg-indigo-100 text-indigo-600 p-2 rounded-lg"><i data-feather="activity"></i></div><h3 class="text-xl font-bold">Mind Gym</h3></div><p class="mt-3 text-slate-500">Quick 2-5 minute activities: breathing exercises, gratitude journaling, and focus resets.</p><a href="#" class="text-blue-500 font-semibold mt-4 inline-block hover:underline">Learn More →</a></div></div>
+                    <div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover fade-in-section" style="transition-delay:200ms"> <img src="/images/peer.jpg" alt="Peer Community" class="w-full h-48 object-cover"><div class="p-6"><div class="flex items-center gap-3"><div class="bg-cyan-100 text-cyan-600 p-2 rounded-lg"><i data-feather="users"></i></div><h3 class="text-xl font-bold">Peer Community</h3></div><p class="mt-3 text-slate-500">Connect with fellow students in a safe, moderated environment with anonymous posting options.</p><a href="#" class="text-blue-500 font-semibold mt-4 inline-block hover:underline">Learn More →</a></div></div>
+                    <div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover fade-in-section" style="transition-delay:300ms"> <img src="/images/wellnes.jpg" alt="Wellness Challenges" class="w-full h-48 object-cover"><div class="p-6"><div class="flex items-center gap-3"><div class="bg-amber-100 text-amber-600 p-2 rounded-lg"><i data-feather="award"></i></div><h3 class="text-xl font-bold">Wellness Challenges</h3></div><p class="mt-3 text-slate-500">Gamified self-care with badges, points, and campus perks for completing wellness tasks.</p><a href="#" class="text-blue-500 font-semibold mt-4 inline-block hover:underline">Learn More →</a></div></div>
+                    <div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover fade-in-section" style="transition-delay:400ms"> <img src="/images/booking.jpg" alt="Confidential Booking" class="w-full h-48 object-cover"><div class="p-6"><div class="flex items-center gap-3"><div class="bg-pink-100 text-pink-600 p-2 rounded-lg"><i data-feather="calendar"></i></div><h3 class="text-xl font-bold">Confidential Booking</h3></div><p class="mt-3 text-slate-500">Secure, private appointment booking with counselors and campus support services.</p><a href="#" class="text-blue-500 font-semibold mt-4 inline-block hover:underline">Learn More →</a></div></div>
+                    <div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover fade-in-section" style="transition-delay:500ms"> <img src="/images/privacy.jpg" alt="Complete Privacy" class="w-full h-48 object-cover"><div class="p-6"><div class="flex items-center gap-3"><div class="bg-blue-100 text-blue-600 p-2 rounded-lg"><i data-feather="shield"></i></div><h3 class="text-xl font-bold">Complete Privacy</h3></div><p class="mt-3 text-slate-500">Your data is encrypted, confidential, and never shared. Anonymous options available.</p><a href="#" class="text-blue-500 font-semibold mt-4 inline-block hover:underline">Learn More →</a></div></div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="py-20 bg-slate-50">
+            <div class="container mx-auto px-6">
+                <div class="text-center fade-in-section bg-white/50 backdrop-blur-xl p-12 rounded-3xl border shadow-2xl max-w-4xl mx-auto">
+                    <h2 class="text-3xl font-bold text-slate-800">Ready to Start Your Wellness Journey?</h2>
+                    <p class="mt-3 text-lg text-slate-500 max-w-xl mx-auto">Join thousands of students who have found support, community, and peace of mind with ChillSaathi.</p>
+                    <div class="mt-8 flex justify-center gap-4">
+                        <a href="booking.html" class="bg-white text-slate-700 font-semibold px-6 py-3 rounded-full hover:bg-slate-100 shadow-lg border">Book a Session</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <div id="chatbot-container">
+    <button id="chatbot-toggle-btn" class="flex items-center justify-center">
+        <i data-feather="message-circle" class="w-8 h-8"></i>
+    </button>
+
+    <div id="chat-window">
+        <div class="chat-header">
+            <span>ChillSaathi AI</span>
+            <button id="chatbot-close-btn" class="p-1 rounded-full hover:bg-white/20">
+                <i data-feather="x" class="w-5 h-5"></i>
+            </button>
+        </div>
+        <div id="chat-messages" class="chat-messages">
+            <div class="bot-message chat-message">
+                Hi there! I'm your ChillSaathi AI. How can I support you today?
+            </div>
+        </div>
+        <div class="chat-input-container">
+            <form id="chat-form" class="chat-input">
+                <input type="text" id="chat-input-field" class="flex-grow px-4 py-2 border border-slate-300 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="Type your message...">
+                <button type="submit" class="bg-blue-500 text-white p-3 rounded-full hover:bg-blue-600">
+                    <i data-feather="send" class="w-5 h-5"></i>
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Chatbot Styles */
+    #chatbot-container {
+        position: fixed;
+        bottom: 2rem;
+        right: 2rem;
+        z-index: 1000;
+    }
+    #chatbot-toggle-btn {
+        background-color: #3b82f6;
+        color: white;
+        padding: 1rem;
+        border-radius: 9999px;
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        cursor: pointer;
+        transition: transform 0.3s ease;
+    }
+    #chatbot-toggle-btn:hover {
+        transform: scale(1.05);
+    }
+    #chat-window {
+        position: fixed;
+        bottom: 6rem;
+        right: 2rem;
+        width: 90vw;
+        max-width: 400px;
+        height: 70vh;
+        max-height: 600px;
+        background-color: white;
+        border-radius: 1.5rem;
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+        transform: translateY(20px) scale(0.95);
+        opacity: 0;
+        pointer-events: none;
+    }
+    #chat-window.open {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+        pointer-events: auto;
+    }
+    .chat-header {
+        background: linear-gradient(to right, #2dd4bf, #3b82f6);
+        color: white;
+        padding: 1.5rem;
+        font-weight: 600;
+        border-top-left-radius: 1.5rem;
+        border-top-right-radius: 1.5rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .chat-messages {
+        flex-grow: 1;
+        padding: 1rem;
+        overflow-y: auto;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+    .chat-messages::-webkit-scrollbar {
+        width: 8px;
+    }
+    .chat-messages::-webkit-scrollbar-track {
+        background: #f1f5f9; /* slate-100 */
+    }
+    .chat-messages::-webkit-scrollbar-thumb {
+        background: #cbd5e1; /* slate-300 */
+        border-radius: 4px;
+    }
+    .chat-messages::-webkit-scrollbar-thumb:hover {
+        background: #94a3b8; /* slate-400 */
+    }
+    .chat-message {
+        max-width: 85%;
+        padding: 0.75rem 1rem;
+        border-radius: 1.25rem;
+    }
+    .user-message {
+        background-color: #dbeafe; /* blue-100 */
+        align-self: flex-end;
+        border-bottom-right-radius: 0.25rem;
+    }
+    .bot-message {
+        background-color: #e2e8f0; /* slate-200 */
+        align-self: flex-start;
+        border-bottom-left-radius: 0.25rem;
+    }
+    .chat-input-container {
+        padding: 1rem;
+        border-top: 1px solid #e2e8f0;
+    }
+    .chat-input {
+        width: 100%;
+        display: flex;
+        gap: 0.5rem;
+    }
+    .typing-indicator span {
+        display: inline-block;
+        width: 8px;
+        height: 8px;
+        background-color: #94a3b8;
+        border-radius: 50%;
+        margin: 0 2px;
+        animation: bounce 1s infinite;
+    }
+    .typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
+    .typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
+    @keyframes bounce {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-5px); }
+    }
+</style>
+
+<script>
+    // --- Chatbot Logic ---
+    const chatToggleBtn = document.getElementById('chatbot-toggle-btn');
+    const chatCloseBtn = document.getElementById('chatbot-close-btn');
+    const chatWindow = document.getElementById('chat-window');
+    const chatMessages = document.getElementById('chat-messages');
+    const chatForm = document.getElementById('chat-form');
+    const chatInput = document.getElementById('chat-input-field');
+
+    let chatHistory = [];
+
+    function addMessage(text, isUser = false) {
+        const messageDiv = document.createElement('div');
+        messageDiv.classList.add('chat-message', isUser ? 'user-message' : 'bot-message');
+        messageDiv.textContent = text;
+        chatMessages.appendChild(messageDiv);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    function showTypingIndicator() {
+        const typingDiv = document.createElement('div');
+        typingDiv.classList.add('bot-message', 'chat-message', 'typing-indicator');
+        typingDiv.innerHTML = '<span></span><span></span><span></span>';
+        chatMessages.appendChild(typingDiv);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    function removeTypingIndicator() {
+        const typingIndicator = chatMessages.querySelector('.typing-indicator');
+        if (typingIndicator) {
+            typingIndicator.remove();
+        }
+    }
+
+    async function sendMessageToAI(prompt) {
+        showTypingIndicator();
+        const apiKey = "AIzaSyBIB49JwkxPjYX-BMlYV5pllwbxJCJHARw";
+        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+
+        chatHistory.push({ role: "user", parts: [{ text: prompt }] });
+
+        const payload = {
+            contents: chatHistory,
+            systemInstruction: {
+                parts: [{ text: "You are a friendly and supportive AI assistant named ChillSaathi. Your purpose is to help college students manage stress, anxiety, and academic pressure. Provide compassionate, encouraging, and helpful responses, but always advise them to seek professional help for serious issues. Keep responses concise and to the point." }]
+            }
+        };
+
+        let response;
+        try {
+            response = await fetch(apiUrl, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+
+            if (!response.ok) {
+                throw new Error(`API error: ${response.status} ${response.statusText}`);
+            }
+
+            const result = await response.json();
+            const botMessage = result.candidates[0].content.parts[0].text;
+
+            chatHistory.push({ role: "model", parts: [{ text: botMessage }] });
+
+            return botMessage;
+        } catch (error) {
+            console.error("Error communicating with AI:", error);
+            return "I'm sorry, I am unable to connect right now. Please try again later.";
+        } finally {
+            removeTypingIndicator();
+        }
+    }
+
+    // Use a more robust selector to handle Feather icons replacement
+    chatToggleBtn.addEventListener('click', () => {
+        chatWindow.classList.toggle('open');
+        const iconElement = chatToggleBtn.querySelector('svg');
+        if (iconElement) {
+            iconElement.setAttribute('data-feather', chatWindow.classList.contains('open') ? 'x' : 'message-circle');
+            feather.replace();
+        }
+    });
+
+    chatCloseBtn.addEventListener('click', () => {
+        chatWindow.classList.remove('open');
+        const iconElement = chatToggleBtn.querySelector('svg');
+        if (iconElement) {
+            iconElement.setAttribute('data-feather', 'message-circle');
+            feather.replace();
+        }
+    });
+
+    chatForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const userMessage = chatInput.value.trim();
+        if (userMessage) {
+            addMessage(userMessage, true);
+            chatInput.value = '';
+            const botResponse = await sendMessageToAI(userMessage);
+            addMessage(botResponse);
+        }
+    });
+
+    // Initialize chat history with the welcome message
+    chatHistory.push({ role: "model", parts: [{ text: "Hi there! I'm your ChillSaathi AI. How can I support you today?" }] });
+</script>
+
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Kindness Challenge</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <script src="https://unpkg.com/feather-icons"></script>
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #ffffff;
+        }
+
+        .subtle-bg-grid {
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23dbeafe' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+        
+        #hero {
+            position: relative;
+            overflow: hidden;
+        }
+
+        #hero-waves {
+            position: absolute;
+            top: -10%;
+            left: -20%;
+            width: 140%;
+            height: 150%;
+            z-index: 0;
+            transform: rotate(-15deg);
+        }
+
+        #hero-waves-extra {
+            position: absolute;
+            bottom: -20%;
+            left: -35%;
+            width: 140%;
+            height: 140%;
+            z-index: 1;
+            transform: rotate(25deg);
+        }
+
+        .affirmation-corner {
+            position: absolute;
+            top: 12vh;
+            left: 8vw;
+            z-index: 5;
+            width: 300px;
+            height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .mood-aura {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: var(--aura-color, rgba(167, 139, 250, 0.3));
+            filter: blur(50px);
+            animation: pulse-glow-1 20s infinite ease-in-out;
+            transition: background 1s ease;
+        }
+
+        .wave-path {
+            animation: wave-flow 25s ease-in-out infinite alternate;
+        }
+
+        #wave-2 { animation-delay: -5s; animation-duration: 30s; }
+        #wave-3 { animation-delay: -10s; animation-duration: 36s; }
+
+        @keyframes wave-flow {
+            from {
+                transform: translateX(-5%) translateY(-3%);
+            }
+            to {
+                transform: translateX(5%) translateY(3%);
+            }
+        }
+
+        .gradient-text {
+            background: linear-gradient(to right, #2dd4bf, #3b82f6);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-fill-color: transparent;
+        }
+
+        .animated-gradient-text {
+            background: linear-gradient(90deg, #2dd4bf, #3b82f6, #818cf8, #2dd4bf);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: text-shine 3s linear infinite;
+        }
+
+        @keyframes text-shine {
+            to {
+                background-position: 200% center;
+            }
+        }
+        
+        .animated-hero-gradient-bg {
+            background: linear-gradient(90deg, #60a5fa, #38bdf8, #22c55e, #60a5fa);
+            background-size: 200% auto;
+            animation: text-shine 10s ease-in-out infinite;
+        }
+
+        @keyframes hover-float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .mood-card {
+            position: relative;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            animation: hover-float 8s ease-in-out infinite;
+        }
+
+        .mood-card:hover {
+            transform: scale(1.08) !important;
+            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.15), 0 8px 10px -6px rgb(0 0 0 / 0.15) !important;
+            animation-play-state: paused;
+        }
+        
+        .mood-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 0.75rem; 
+            z-index: -1;
+            background: var(--glow-color);
+            filter: blur(20px);
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+
+        .mood-card:hover::before {
+            opacity: 0.7;
+        }
+
+        .card-hover {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+        }
+
+        .mood-check-container {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .mood-check-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 3px;
+            height: 150px;
+            background: linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.7), transparent);
+            border-radius: 3px;
+            animation: shimmer-light 5s ease-in-out infinite;
+        }
+        
+        @keyframes shimmer-light {
+            0% { transform: translateY(-50%); opacity: 0.5; }
+            50% { transform: translateY(calc(100% + 50px)); opacity: 1; }
+            100% { transform: translateY(calc(200% + 100px)); opacity: 0.5; }
+        }
+
+        .aura-center, .aura-outer {
+            transform-origin: center;
+            transition: all 4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .is-breathing-in .aura-center {
+            transform: scale(1.1);
+            filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.5));
+        }
+        .is-breathing-in .aura-outer {
+            transform: scale(1.15);
+            opacity: 0.6;
+            stroke-width: 1;
+        }
+        
+        .is-breathing-out .aura-center {
+            transform: scale(0.9);
+            filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.2));
+        }
+        .is-breathing-out .aura-outer {
+            transform: scale(0.85);
+            opacity: 0.2;
+            stroke-width: 2.5;
+        }
+        
+        .progress-bar-inner {
+            transition: width 0.5s ease-in-out;
+        }
+
+        .fade-in-section {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+
+        .fade-in-section.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .breathing-module-container {
+            position: relative;
+            overflow: hidden;
+            background: #1e3a8a;
+        }
+
+        .breathing-module-container::before,
+        .breathing-module-container::after {
+            content: '';
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            z-index: 0;
+        }
+
+        .breathing-module-container::before {
+            width: 300px;
+            height: 300px;
+            background: rgba(56, 189, 248, 0.4);
+            top: -100px;
+            left: -100px;
+            animation: pulse-glow-1 15s infinite alternate ease-in-out;
+        }
+        
+        .breathing-module-container::after {
+            width: 400px;
+            height: 400px;
+            background: rgba(167, 139, 250, 0.4);
+            bottom: -150px;
+            right: -150px;
+            animation: pulse-glow-2 18s infinite alternate ease-in-out;
+        }
+
+        @keyframes pulse-glow-1 {
+            0% { transform: translate(0, 0) scale(1); }
+            25% { transform: translate(10px, -15px) scale(1.05); }
+            50% { transform: translate(-10px, 10px) scale(0.95); }
+            75% { transform: translate(5px, 15px) scale(1.05); }
+            100% { transform: translate(0, 0) scale(1); }
+        }
+
+        @keyframes pulse-glow-2 {
+            from { transform: scale(1.1) translate(0, 0); }
+            to { transform: scale(0.9) translate(-20px, -20px); }
+        }
+
+        .breathing-module-container > * {
+            position: relative;
+            z-index: 1;
+        }
+
+        .animated-gradient-background {
+            background: linear-gradient(90deg, #2dd4bf, #3b82f6, #818cf8, #2dd4bf);
+            background-size: 200% auto;
+            animation: gradient-flow 3s linear infinite;
+        }
+
+        @keyframes gradient-flow {
+            to {
+            background-position: 200% center;
+            }
+        }
+
+        #mind-gym, #kindness-challenge {
+            position: relative;
+            overflow: hidden;
+        }
+
+        #mind-gym-waves {
+            position: absolute;
+            top: -25%;
+            right: -25%;
+            width: 150%;
+            height: 150%;
+            z-index: 0;
+            transform: rotate(15deg);
+        }
+        
+        #kindness-challenge-waves {
+            position: absolute;
+            bottom: -60%;
+            left: -25%;
+            width: 150%;
+            height: 150%;
+            z-index: 0;
+            opacity: 0.5;
+        }
+
+        #mind-gym .content-wrapper {
+            position: relative;
+            z-index: 1;
+        }
+
+        #auth-modal-backdrop {
+            transition: opacity 0.3s ease-in-out;
+        }
+        #auth-modal-panel {
+            transition: all 0.3s ease-in-out;
+        }
+
+        #profile-menu {
+            transition: opacity 0.2s ease-out, transform 0.2s ease-out;
+        }
+
+        #profile-menu.is-hidden {
+            opacity: 0;
+            transform: translateY(0.5rem) scale(0.95);
+            pointer-events: none;
+        }
+
+        #profile-menu.is-visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+        
+    </style>
+</head>
+<body class="text-slate-700">
+    <main>
+        <section id="kindness-challenge" class="py-20 bg-white">
+            <div class="relative z-10">
+                <div class="container mx-auto px-6">
+                    <div class="text-center mb-12 fade-in-section">
+                        <h2 class="text-3xl md:text-4xl font-bold text-slate-800">Daily <span class="gradient-text">Kindness Challenge</span></h2>
+                        <p class="mt-4 text-lg text-slate-500 max-w-2xl mx-auto">Small acts of kindness can make a big difference. Join our daily challenge to spread positivity on campus.</p>
+                    </div>
+                    <div class="max-w-3xl mx-auto bg-white p-8 sm:p-12 rounded-3xl shadow-lg text-center fade-in-section border border-slate-200 transition-all duration-300 hover:shadow-xl">
+                        <div class="flex justify-center items-center gap-3">
+                            <i data-feather="heart" class="w-8 h-8 gradient-text"></i>
+                            <h3 class="text-2xl font-bold gradient-text">Today's Kind Act</h3>
+                        </div>
+                        <p class="mt-4 text-xl sm:text-2xl font-medium min-h-[60px] daily-challenge-text leading-relaxed gradient-text">
+                            Loading today's challenge...
+                        </p>
+                        <button id="submit-entry-btn" class="mt-8 bg-blue-500 text-white font-bold px-8 py-3 rounded-full shadow-lg transition-all duration-300 ease-in-out hover:bg-blue-600 hover:shadow-xl hover:-translate-y-1">
+                            Share What You Did
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div id="submission-modal" class="fixed inset-0 z-[100] hidden opacity-0 transition-opacity duration-300" role="dialog" aria-modal="true">
+        <div class="fixed inset-0 bg-black bg-opacity-60" aria-hidden="true"></div>
+        <div class="flex items-center justify-center min-h-screen p-4">
+            <div class="relative bg-white rounded-2xl shadow-xl w-full max-w-lg transform scale-95 transition-all duration-300 overflow-hidden">
+                <div class="p-8">
+                    <button id="close-submission-modal-btn" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 transition-colors">
+                        <i data-feather="x"></i>
+                        <span class="sr-only">Close</span>
+                    </button>
+                    <div class="pb-6 border-b border-slate-200">
+                        <h3 class="text-2xl font-bold text-slate-800">Share Your Act of Kindness</h3>
+                        <p class="mt-2 text-slate-500">Describe what you did. Sharing inspires others and reinforces positive feelings.</p>
+                    </div>
+                    <form id="submission-form" class="mt-6">
+                        <label for="kindness-entry" class="text-sm font-semibold text-slate-600">Your kind act (optional)</label>
+                        <textarea id="kindness-entry" rows="5" class="mt-2 w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all" placeholder="e.g., I saw someone was having a tough day, so I bought them a coffee..."></textarea>
+                        <div class="mt-6 flex justify-end gap-3">
+                            <button type="button" id="cancel-submission-btn" class="px-6 py-2 rounded-lg text-slate-700 bg-slate-100 hover:bg-slate-200 font-semibold transition-colors">Cancel</button>
+                            <button type="submit" class="px-6 py-2 rounded-lg text-white bg-blue-500 hover:bg-blue-600 font-semibold transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5">Submit Entry</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+<script>
+    // Feather Icons
+    feather.replace();
+
+    // A list of daily kindness challenge ideas
+    const challenge = [
+        "Send a positive text to a friend or family member.",
+        "Give a genuine compliment to a stranger.",
+        "Write a short note of gratitude and leave it somewhere for someone to find.",
+        "Share a helpful resource with a fellow community member.",
+        "Offer to help a neighbor with a small task.",
+        "Leave a positive review for a small business you love.",
+        "Thank a service worker (like a barista, cashier, or delivery person).",
+        "Share a funny or uplifting meme in the community.",
+        "Let someone go ahead of you in line.",
+        "Hold the door open for someone."
+    ];
+
+    // Function to get a random challenge from the list
+    function getRandomChallenge() {
+        const today = new Date();
+        const dayOfYear = Math.floor((today - new Date(today.getFullYear(), 0, 0)) / 1000 / 60 / 60 / 24);
+        return challenges[dayOfYear % challenges.length];
+    }
+
+    // Function to update the challenge text on the page
+    function updateDailyChallenge() {
+        const challengeTextElement = document.querySelector('.daily-challenge-text');
+        const challenge = getRandomChallenge();
+        if (challengeTextElement) {
+            challengeTextElement.textContent = challenge;
+        }
+    }
+
+    // Event listener for the "Share What You Did" button
+    document.addEventListener('DOMContentLoaded', () => {
+        const submitButton = document.getElementById('submit-entry-btn');
+        const submissionModal = document.getElementById('submission-modal');
+        const closeModalButton = document.getElementById('close-submission-modal-btn');
+        const cancelBtn = document.getElementById('cancel-submission-btn');
+        const submissionForm = document.getElementById('submission-form');
+
+        updateDailyChallenge();
+
+        if (submitButton) {
+            submitButton.addEventListener('click', () => {
+                if (submissionModal) {
+                    submissionModal.classList.remove('hidden');
+                    setTimeout(() => {
+                        submissionModal.classList.remove('opacity-0');
+                        submissionModal.querySelector('.relative').classList.remove('scale-95');
+                    }, 10);
+                }
+            });
+        }
+
+        if (closeModalButton) {
+            closeModalButton.addEventListener('click', () => {
+                if (submissionModal) {
+                    submissionModal.classList.add('opacity-0');
+                    submissionModal.querySelector('.relative').classList.add('scale-95');
+                    setTimeout(() => {
+                        submissionModal.classList.add('hidden');
+                    }, 300);
+                }
+            });
+        }
+
+        if (cancelBtn) {
+            cancelBtn.addEventListener('click', () => {
+                if (submissionModal) {
+                    submissionModal.classList.add('opacity-0');
+                    submissionModal.querySelector('.relative').classList.add('scale-95');
+                    setTimeout(() => {
+                        submissionModal.classList.add('hidden');
+                    }, 300);
+                }
+            });
+        }
+
+        if (submissionForm) {
+            submissionForm.addEventListener('submit', (event) => {
+                event.preventDefault();
+                alert("Thanks for sharing your kindness!");
+                submissionModal.classList.add('opacity-0');
+                submissionModal.querySelector('.relative').classList.add('scale-95');
+                setTimeout(() => {
+                    submissionModal.classList.add('hidden');
+                }, 300);
+            });
+        }
+
+        // Scroll-triggered animations
+        const sections = document.querySelectorAll('.fade-in-section');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+        sections.forEach(section => { observer.observe(section); });
+
+    });
+</script>
+
+        <section id="mind-gym" class="pt-12 pb-20">
+            <svg id="mind-gym-waves" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 800" preserveAspectRatio="xMidYMid slice">
+                <defs>
+                    <linearGradient id="mindGymGradient" x1="-100%" y1="50%" x2="100%" y2="50%">
+                        <stop offset="0%" stop-color="rgba(107, 217, 196, 0.9)" /> <stop offset="50%" stop-color="rgba(191, 219, 254, 0.9)" /> <stop offset="100%" stop-color="rgba(107, 217, 196, 0.9)" /> <animate attributeName="x1" from="-100%" to="100%" dur="25s" repeatCount="indefinite" />
+                        <animate attributeName="x2" from="0%" to="200%" dur="25s" repeatCount="indefinite" />
+                    </linearGradient>
+                </defs>
+                <path class="wave-path" fill="url(#mindGymGradient)" d="M0,0 L0,800 L1440,800 L1440,400 C1200,500,960,300,720,400 C480,500,240,300,0,400 Z" opacity="0.6" style="animation-duration: 35s;" />
+                <path class="wave-path" fill="url(#mindGymGradient)" d="M0,0 L0,800 L1440,800 L1440,450 C1200,400,960,550,720,450 C480,350,240,500,0,450 Z" opacity="0.8" style="animation-duration: 45s; animation-delay: -5s;" />
+            </svg>
+
+            <div class="container mx-auto px-6 content-wrapper">
+                <div class="text-center mb-12 fade-in-section">
+                     <h2 class="text-3xl md:text-4xl font-bold text-slate-800">Quick Activities for <span class="gradient-text">Instant Relief</span></h2>
+                    <p class="mt-4 text-lg text-slate-500 max-w-2xl mx-auto">Science-backed micro-activities designed to fit into your busy schedule. Just 2-5 minutes to reset your mind and boost your wellbeing.</p>
+                </div>
+                <div class="flex flex-col lg:flex-row gap-20 fade-in-section max-w-6xl mx-auto">
+                    <div class="breathing-module-container lg:w-5/12 p-8 rounded-2xl text-white shadow-2xl flex flex-col justify-between">
+                        <div>
+                             <h3 class="text-2xl font-bold">Breathing Balloon</h3>
+                             <p class="mt-1 opacity-80">A guided exercise to calm your mind and find your center.</p>
+                        </div>
+                        <div class="my-8 flex justify-center items-center">
+                            <div class="relative w-48 h-48">
+                                <svg id="breathing-aura" class="absolute inset-0 w-full h-full" viewBox="0 0 100 100">
+                                    <defs>
+                                        <filter id="aura-glow" x="-50%" y="-50%" width="200%" height="200%">
+                                            <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+                                            <feMerge>
+                                                <feMergeNode in="coloredBlur"/>
+                                                <feMergeNode in="SourceGraphic"/>
+                                            </feMerge>
+                                        </filter>
+                                    </defs>
+                                    <circle class="aura-outer" cx="50" cy="50" r="40" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="2"/>
+                                    <circle class="aura-center" cx="50" cy="50" r="30" fill="rgba(255,255,255,0.2)" filter="url(#aura-glow)"/>
+                                </svg>
+
+                                <div id="balloon-display" class="absolute inset-0 flex flex-col items-center justify-center">
+                                    <i data-feather="heart" class="w-16 h-16"></i>
+                                    <span id="balloon-level" class="mt-2 font-bold">Level 1 - Cycle 0/2</span>
+                                </div>
+                                <div id="balloon-timer-display" class="hidden absolute inset-0 flex flex-col items-center justify-center bg-black/10 rounded-full">
+                                     <span id="balloon-state-text" class="text-xl font-semibold">Breathe In</span>
+                                     <span id="balloon-countdown" class="text-6xl font-bold">4</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="balloon-initial-view">
+                            <div class="bg-white/20 p-4 rounded-lg text-center">
+                                <h4 class="font-bold">Ready for Level 1?</h4>
+                                <p class="text-sm opacity-80 mt-1">A simple exercise to start: Inhale (4s), Hold (4s), Exhale (4s).</p>
+                            </div>
+                             <div class="flex gap-4 mt-4">
+                                <button id="start-breathing-btn" class="w-full bg-white text-blue-600 font-bold py-3 rounded-lg hover:bg-slate-200">Begin</button>
+                                <button class="bg-white/20 font-semibold px-4 py-3 rounded-lg hover:bg-white/30">Maybe Later</button>
+                            </div>
+                        </div>
+                        <div id="balloon-active-view" class="hidden">
+                            <div class="flex items-center justify-center gap-4">
+                                <button id="pause-resume-btn" class="bg-white text-blue-600 font-bold py-3 rounded-lg w-full flex items-center justify-center gap-2">
+                                    <i data-feather="pause" class="w-5 h-5"></i>
+                                    <span>Pause</span>
+                                </button>
+                                <button id="reset-btn" class="bg-white/20 font-semibold px-4 py-3 rounded-lg hover:bg-white/30"><i data-feather="rotate-cw" class="w-5 h-5"></i></button>
+                            </div>
+                        </div>
+
+                        <div id="level-complete-view" class="hidden text-center">
+                            <i data-feather="award" class="w-16 h-16 mx-auto text-amber-300"></i>
+                            <h3 id="complete-title" class="text-2xl font-bold mt-4">Level 1 Complete!</h3>
+                            <p id="complete-text" class="opacity-80 mt-2">Great job! You're ready for the next step in your mindfulness journey.</p>
+                            <button id="next-level-btn" class="mt-6 w-full bg-white text-blue-600 font-bold py-3 rounded-lg hover:bg-slate-200">Start Level 2</button>
+                        </div>
+                    </div>
+
+                    <div class="lg:w-7/12">
+                        <h3 class="text-2xl font-bold mb-4 text-slate-800">Choose Your Activity</h3>
+                        <div class="space-y-4">
+                            <div class="bg-white p-4 rounded-xl shadow-md flex items-center justify-between border-2 border-blue-500">
+                                <div>
+                                    <h4 class="font-bold">Breathing Balloon</h4>
+                                    <p class="text-sm text-slate-500">Guided breathing exercise to calm your mind and reduce stress</p>
+                                    <span class="text-xs text-blue-500 font-semibold mt-1 inline-block">12k completed today</span>
+                                </div>
+                                <div class="text-right">
+                                    <span class="font-bold text-slate-500">3 min</span>
+                                    <button class="mt-1 bg-blue-100 text-blue-600 p-2 rounded-full"><i data-feather="play" class="w-5 h-5"></i></button>
+                                </div>
+                            </div>
+                            <div class="bg-white p-4 rounded-xl shadow-md flex items-center justify-between opacity-70"><div><h4 class="font-bold">Gratitude Journal</h4><p class="text-sm text-slate-500">Daily gratitude practice to boost mood and positive thinking</p><span class="text-xs text-blue-500 font-semibold mt-1 inline-block">850 completed today</span></div><div class="text-right"><span class="font-bold text-slate-500">5 min</span><button class="mt-1 bg-slate-100 text-slate-600 p-2 rounded-full"><i data-feather="play" class="w-5 h-5"></i></button></div></div>
+                             <div class="bg-white p-4 rounded-xl shadow-md flex items-center justify-between opacity-70"><div><h4 class="font-bold">Focus Reset</h4><p class="text-sm text-slate-500">Quick mental reset to improve concentration and clarity</p><span class="text-xs text-blue-500 font-semibold mt-1 inline-block">2.1k completed today</span></div><div class="text-right"><span class="font-bold text-slate-500">2 min</span><button class="mt-1 bg-slate-100 text-slate-600 p-2 rounded-full"><i data-feather="play" class="w-5 h-5"></i></button></div></div>
+                             <div class="bg-white p-4 rounded-xl shadow-md flex items-center justify-between opacity-70"><div><h4 class="font-bold">Energy Boost</h4><p class="text-sm text-slate-500">Revitalizing exercises to combat fatigue and boost energy</p><span class="text-xs text-blue-500 font-semibold mt-1 inline-block">756 completed today</span></div><div class="text-right"><span class="font-bold text-slate-500">4 min</span><button class="mt-1 bg-slate-100 text-slate-600 p-2 rounded-full"><i data-feather="play" class="w-5 h-5"></i></button></div></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-12 fade-in-section py-8">
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+                        <div><p class="text-4xl font-bold gradient-text">5,200</p><p class="mt-1 text-slate-800 font-semibold">Students Helped</p></div>
+                        <div><p class="text-4xl font-bold gradient-text">30%</p><p class="mt-1 text-slate-800 font-semibold">Feel Better</p></div>
+                        <div><p class="text-4xl font-bold gradient-text">3 min</p><p class="mt-1 text-slate-800 font-semibold">Average Time</p></div>
+                        <div><p class="text-4xl font-bold gradient-text">24/7</p><p class="mt-1 text-slate-800 font-semibold">Available</p></div>
+                    </div>
+                </div>
+            </div>
+        </section>  
+        
+        <section id="gamification" class="py-20 bg-white subtle-bg-grid">
+            <div class="container mx-auto px-6">
+                 <div class="text-center mb-12 fade-in-section">
+                     <h2 class="text-3xl md:text-4xl font-bold text-slate-800">Make Wellness <span class="gradient-text">Fun & Rewarding</span></h2>
+                    <p class="mt-4 text-lg text-slate-500 max-w-2xl mx-auto">Earn points, unlock achievements, and get campus perks while taking care of your mental health.</p>
+                </div>
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 fade-in-section">
+                    <div class="lg:col-span-1">
+                        <h3 class="text-xl font-bold mb-4">Today's Challenges</h3>
+                        <div class="space-y-4">
+                            <div class="bg-slate-50 p-4 rounded-lg">
+                                <div class="flex justify-between items-center"><h4 class="font-semibold">Daily Kindness Act</h4><span class="text-sm font-bold text-green-500">+50 pts</span></div>
+                                <p class="text-sm text-slate-500 mt-1">Perform one act of kindness for a fellow student</p>
+                                <div class="mt-2 h-2 bg-slate-200 rounded-full"><div class="h-2 bg-green-500 rounded-full progress-bar-inner" style="width: 75%"></div></div>
+                                <button class="mt-3 w-full text-center bg-green-100 text-green-700 font-semibold py-2 rounded-lg text-sm">Continue (+25%)</button>
+                            </div>
+                            <div class="bg-slate-50 p-4 rounded-lg"><div class="flex justify-between items-center"><h4 class="font-semibold">Mindful Minutes</h4><span class="text-sm font-bold text-blue-500">+30 pts</span></div><p class="text-sm text-slate-500 mt-1">Complete 10 minutes of mindfulness activities</p><div class="mt-2 h-2 bg-slate-200 rounded-full"><div class="h-2 bg-blue-500 rounded-full progress-bar-inner" style="width: 40%"></div></div><button class="mt-3 w-full text-center bg-blue-100 text-blue-700 font-semibold py-2 rounded-lg text-sm">Continue (+25%)</button></div>
+                            <div class="bg-slate-50 p-4 rounded-lg"><div class="flex justify-between items-center"><h4 class="font-semibold">Community Helper</h4><span class="text-sm font-bold text-purple-500">+75 pts</span></div><p class="text-sm text-slate-500 mt-1">Help 3 peers in the support forums</p><div class="mt-2 h-2 bg-slate-200 rounded-full"><div class="h-2 bg-purple-500 rounded-full progress-bar-inner" style="width: 90%"></div></div><button class="mt-3 w-full text-center bg-purple-100 text-purple-700 font-semibold py-2 rounded-lg text-sm">Continue (+25%)</button></div>
+                        </div>
+                    </div>
+                    <div class="lg:col-span-1 flex flex-col items-center">
+                         <h3 class="text-xl font-bold mb-4">Achievements</h3>
+                         <div class="bg-gradient-to-br from-blue-500 to-teal-400 p-6 rounded-2xl text-white text-center shadow-xl w-full max-w-xs">
+                             <p class="opacity-80">Total Points</p>
+                             <p class="text-6xl font-bold my-2">785</p>
+                             <div class="flex justify-around mt-4">
+                                 <div><p class="text-2xl font-bold">12</p><p class="text-sm opacity-80">Days Active</p></div>
+                                 <div><p class="text-2xl font-bold">3</p><p class="text-sm opacity-80">Badges Earned</p></div>
+                             </div>
+                         </div>
+                         <div class="grid grid-cols-3 gap-4 mt-6 text-center w-full max-w-xs">
+                            <div><div class="p-4 bg-amber-100 text-amber-600 rounded-lg"><i data-feather="sun"></i></div><p class="text-xs mt-1 font-semibold">Wellness Warrior</p><p class="text-xs text-slate-400">Unlocked</p></div>
+                            <div><div class="p-4 bg-emerald-100 text-emerald-600 rounded-lg"><i data-feather="heart"></i></div><p class="text-xs mt-1 font-semibold">Kindness Champion</p><p class="text-xs text-slate-400">Unlocked</p></div>
+                            <div><div class="p-4 bg-slate-100 text-slate-400 rounded-lg"><i data-feather="moon"></i></div><p class="text-xs mt-1 font-semibold">Mindful Master</p><p class="text-xs text-slate-400">Locked</p></div>
+                         </div>
+                    </div>
+                    <div class="lg:col-span-1">
+                        <h3 class="text-xl font-bold mb-4">Rewards & Rankings</h3>
+                        <div class="space-y-3">
+                            <p class="text-sm font-semibold text-slate-500">Campus Perks Available</p>
+                            <div class="flex items-center justify-between bg-slate-50 p-3 rounded-lg"><div class="flex items-center gap-3"><div class="p-2 bg-green-100 text-green-600 rounded-lg"><i data-feather="coffee" class="w-5 h-5"></i></div><div><p class="font-semibold">Free Coffee at Cafe</p><p class="text-sm text-slate-400">100 points</p></div></div><button class="bg-green-500 text-white text-sm font-semibold px-4 py-1 rounded-full">Redeem</button></div>
+                            <div class="flex items-center justify-between bg-slate-50 p-3 rounded-lg opacity-60"><div class="flex items-center gap-3"><div class="p-2 bg-slate-200 text-slate-500 rounded-lg"><i data-feather="book-open" class="w-5 h-5"></i></div><div><p class="font-semibold">Library Extension Pass</p><p class="text-sm text-slate-400">150 points</p></div></div><button class="bg-slate-300 text-slate-500 text-sm font-semibold px-4 py-1 rounded-full cursor-not-allowed">Locked</button></div>
+                            <div class="flex items-center justify-between bg-slate-50 p-3 rounded-lg opacity-60"><div class="flex items-center gap-3"><div class="p-2 bg-slate-200 text-slate-500 rounded-lg"><i data-feather="target" class="w-5 h-5"></i></div><div><p class="font-semibold">Gym Day Pass</p><p class="text-sm text-slate-400">200 points</p></div></div><button class="bg-slate-300 text-slate-500 text-sm font-semibold px-4 py-1 rounded-full cursor-not-allowed">Locked</button></div>
+                        </div>
+                         <div class="mt-6">
+                             <p class="text-sm font-semibold text-slate-500">Weekly Leaders</p>
+                             <div class="space-y-2 mt-3">
+                                <div class="flex items-center gap-3"><span class="font-bold text-lg text-amber-400">🥇</span><div><p class="font-semibold">Anonymous Student</p><p class="text-xs text-slate-400">1250 points</p></div></div>
+                                <div class="flex items-center gap-3"><span class="font-bold text-lg text-slate-400">🥈</span><div><p class="font-semibold">Wellness Explorer</p><p class="text-xs text-slate-400">1100 points</p></div></div>
+                                <div class="flex items-center gap-3"><span class="font-bold text-lg text-orange-400">🥉</span><div><p class="font-semibold">Kind Soul</p><p class="text-xs text-slate-400">950 points</p></div></div>
+                             </div>
+                             <a href="#" class="text-blue-500 text-sm font-semibold mt-4 inline-block hover:underline">View Full Leaderboard →</a>
+                         </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+
+
+    </main>
+    
+    <footer class="bg-slate-800 text-slate-300 py-16">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-lg font-bold text-white">🌿 ChillSaathi</h3>
+                    <p class="mt-2 text-sm text-slate-400">Your trusted companion for mental wellness. Providing stigma-free, confidential support for college students across India.</p>
+                </div>
+                 <div>
+                    <h4 class="font-semibold text-white">Quick Access</h4>
+                    <ul class="mt-4 space-y-2 text-sm">
+                        <li><a href="#" class="text-slate-400 hover:text-white">AI Support Chat</a></li>
+                        <li><a href="#" class="text-slate-400 hover:text-white">Mind Gym Activities</a></li>
+                        <li><a href="#" class="text-slate-400 hover:text-white">Peer Community</a></li>
+                        <li><a href="#" class="text-slate-400 hover:text-white">Resource Library</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-white">Need Help?</h4>
+                    <ul class="mt-4 space-y-2 text-sm">
+                        <li><a href="#" class="text-slate-400 hover:text-white">Emergency: 1075 (KIRAN)</a></li>
+                        <li><a href="#" class="text-slate-400 hover:text-white">24/7 Peer Support</a></li>
+                         <li><a href="#" class="text-slate-400 hover:text-white">Crisis Resources</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-white">Regional Support</h4>
+                     <ul class="mt-4 space-y-2 text-sm grid grid-cols-2">
+                        <li><a href="#" class="text-slate-400 hover:text-white">हिन्दी</a></li>
+                        <li><a href="#" class="text-slate-400 hover:text-white">ગુજરાતી</a></li>
+                        <li><a href="#" class="text-slate-400 hover:text-white">मराठी</a></li>
+                        <li><a href="#" class="text-slate-400 hover:text-white">தமிழ்</a></li>
+                     </ul>
+                </div>
+            </div>
+            <div class="mt-12 border-t border-slate-700 pt-8 text-center text-sm text-slate-400">
+                <p>&copy; 2025 ChillSaathi. All Rights Reserved. Built with ❤️ for student mental health.</p>
+            </div>
+        </div>
+    </footer>
+
+    <div id="auth-modal" class="fixed inset-0 z-[100] hidden" role="dialog" aria-modal="true">
+        <div id="auth-modal-backdrop" class="fixed inset-0 bg-black bg-opacity-50" aria-hidden="true"></div>
+        <div class="flex items-center justify-center min-h-screen p-4">
+            <div id="auth-modal-panel" class="relative bg-white rounded-2xl shadow-xl w-full max-w-md p-8 transform scale-95 opacity-0">
+                <button id="close-modal-btn" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600">
+                    <i data-feather="x"></i>
+                    <span class="sr-only">Close</span>
+                </button>
+                <div id="auth-modal-content"></div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="backend.js" type="module"></script>
+    
+
+<script>
+    // Feather Icons
+    feather.replace();
+
+    // Mobile Menu
+    const mobileMenuButton = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+    mobileMenuButton.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+    });
+    
+    // Profile Dropdown Menu Logic
+    const profileMenuButton = document.getElementById('profile-menu-button');
+    const profileMenu = document.getElementById('profile-menu');
+
+    if (profileMenuButton && profileMenu) {
+        // We add the is-hidden class by default for the animation
+        profileMenu.classList.add('is-hidden');
+
+        profileMenuButton.addEventListener('click', (event) => {
+            event.stopPropagation();
+            // Toggle visibility classes to trigger the animation
+            profileMenu.classList.toggle('is-hidden');
+            profileMenu.classList.toggle('is-visible');
+            feather.replace(); // Renders icons inside the dropdown
+        });
+
+        window.addEventListener('click', (event) => {
+            if (profileMenu.classList.contains('is-visible') && !profileMenu.contains(event.target) && !profileMenuButton.contains(event.target)) {
+                // Hide the menu with animation when clicking outside
+                profileMenu.classList.remove('is-visible');
+                profileMenu.classList.add('is-hidden');
+            }
+        });
+    }
+
+    // Breathing Balloon Logic
+    const breathingApp = {
+        config: {
+            level: 1,
+            maxLevels: 5,
+            cyclesPerLevel: 2,
+            timings: [
+                { level: 1, in: 4, holdIn: 4, out: 4, holdOut: 2 },
+                { level: 2, in: 4, holdIn: 5, out: 5, holdOut: 2 },
+                { level: 3, in: 5, holdIn: 5, out: 6, holdOut: 2 },
+                { level: 4, in: 5, holdIn: 6, out: 7, holdOut: 2 },
+                { level: 5, in: 6, holdIn: 7, out: 8, holdOut: 2 },
+            ]
+        },
+        state: {
+            currentCycle: 0,
+            phase: 'idle',
+            prePausePhase: null,
+        },
+        elements: {
+            initialView: document.getElementById('balloon-initial-view'),
+            activeView: document.getElementById('balloon-active-view'),
+            display: document.getElementById('balloon-display'),
+            visual: document.getElementById('breathing-aura'),
+            timerDisplay: document.getElementById('balloon-timer-display'),
+            levelText: document.getElementById('balloon-level'),
+            stateText: document.getElementById('balloon-state-text'),
+            countdownText: document.getElementById('balloon-countdown'),
+            startBtn: document.getElementById('start-breathing-btn'),
+            pauseResumeBtn: document.getElementById('pause-resume-btn'),
+            pauseResumeIcon: document.getElementById('pause-resume-btn').querySelector('i'),
+            pauseResumeText: document.getElementById('pause-resume-btn').querySelector('span'),
+            resetBtn: document.getElementById('reset-btn'),
+            levelCompleteView: document.getElementById('level-complete-view'),
+            completeTitle: document.getElementById('complete-title'),
+            completeText: document.getElementById('complete-text'),
+            nextLevelBtn: document.getElementById('next-level-btn'),
+        },
+
+        init() {
+            if (!this.elements.startBtn) return; // Prevent errors if elements don't exist
+            this.elements.startBtn.addEventListener('click', () => this.start());
+            this.elements.pauseResumeBtn.addEventListener('click', () => this.togglePause());
+            this.elements.resetBtn.addEventListener('click', () => this.reset());
+            this.elements.nextLevelBtn.addEventListener('click', () => this.reset());
+        },
+
+        start() {
+            this.elements.initialView.classList.add('hidden');
+            this.elements.activeView.classList.remove('hidden');
+            this.elements.display.classList.add('hidden');
+            this.elements.timerDisplay.classList.remove('hidden');
+            this.state.currentCycle = 1;
+            this.updateLevelDisplay();
+            this.nextPhase('in');
+        },
+        
+        nextPhase(phase) {
+            if (this.state.phase === 'paused') return;
+
+            if (!phase) {
+                this.state.currentCycle++;
+                if (this.state.currentCycle > this.config.cyclesPerLevel) {
+                    this.config.level++;
+                    if (this.config.level > this.config.maxLevels) {
+                        this.showCompletion(true);
+                        this.config.level = 1;
+                    } else {
+                        this.showCompletion(false);
+                    }
+                    return;
+                }
+                this.updateLevelDisplay();
+                phase = 'in';
+            }
+
+            this.state.phase = phase;
+            const levelConfig = this.config.timings[this.config.level - 1];
+            
+            switch(phase) {
+                case 'in':
+                    this.state.countdown = levelConfig.in;
+                    this.elements.stateText.textContent = 'Breathe In';
+                    this.elements.visual.classList.add('is-breathing-in');
+                    this.elements.visual.classList.remove('is-breathing-out');
+                    break;
+                case 'holdIn':
+                    this.state.countdown = levelConfig.holdIn;
+                    this.elements.stateText.textContent = 'Hold';
+                    break;
+                case 'out':
+                    this.state.countdown = levelConfig.out;
+                    this.elements.stateText.textContent = 'Breathe Out';
+                    this.elements.visual.classList.add('is-breathing-out');
+                    this.elements.visual.classList.remove('is-breathing-in');
+                    break;
+                case 'holdOut':
+                    this.state.countdown = levelConfig.holdOut;
+                    this.elements.stateText.textContent = 'Rest';
+                    break;
+            }
+            
+            this.startTicker();
+        },
+
+        startTicker() {
+            clearInterval(this.state.intervalId);
+            this.tick();
+            this.state.intervalId = setInterval(() => this.tick(), 1000);
+        },
+
+        tick() {
+            this.elements.countdownText.textContent = this.state.countdown;
+            if (this.state.countdown <= 0) {
+                clearInterval(this.state.intervalId);
+                const phaseOrder = ['in', 'holdIn', 'out', 'holdOut'];
+                const currentPhaseIndex = phaseOrder.indexOf(this.state.phase);
+                const nextPhaseName = phaseOrder[currentPhaseIndex + 1] || null;
+                this.nextPhase(nextPhaseName);
+                return;
+            }
+            this.state.countdown--;
+        },
+        
+        togglePause() {
+            if (this.state.phase === 'paused') {
+                this.state.phase = this.state.prePausePhase;
+                this.elements.stateText.textContent = this.state.prePauseText;
+                this.elements.pauseResumeIcon.setAttribute('data-feather', 'pause');
+                this.elements.pauseResumeText.textContent = 'Pause';
+                feather.replace();
+                this.startTicker();
+            } else {
+                clearInterval(this.state.intervalId);
+                this.state.prePausePhase = this.state.phase;
+                this.state.prePauseText = this.elements.stateText.textContent;
+                this.state.phase = 'paused';
+                this.elements.stateText.textContent = 'Paused';
+                this.elements.pauseResumeIcon.setAttribute('data-feather', 'play');
+                this.elements.pauseResumeText.textContent = 'Resume';
+                feather.replace();
+            }
+        },
+
+        showCompletion(isFinal) {
+            this.elements.timerDisplay.classList.add('hidden');
+            this.elements.activeView.classList.add('hidden');
+            this.elements.levelCompleteView.classList.remove('hidden');
+
+            if (isFinal) {
+                this.elements.completeTitle.textContent = "Congratulations!";
+                this.elements.completeText.textContent = "You've completed all breathing levels. Amazing work!";
+                this.elements.nextLevelBtn.textContent = "Start Over";
+            } else {
+                this.elements.completeTitle.textContent = `Level ${this.config.level - 1} Complete!`;
+                this.elements.completeText.textContent = "Great job! You're ready for the next step in your mindfulness journey.";
+                this.elements.nextLevelBtn.textContent = `Start Level ${this.config.level}`;
+            }
+            feather.replace();
+        },
+
+        reset() {
+            clearInterval(this.state.intervalId);
+            this.state.phase = 'idle';
+            this.state.currentCycle = 0;
+            this.elements.initialView.classList.remove('hidden');
+            this.elements.activeView.classList.add('hidden');
+            this.elements.display.classList.remove('hidden');
+            this.elements.timerDisplay.classList.add('hidden');
+            this.elements.levelCompleteView.classList.add('hidden');
+            this.elements.visual.classList.remove('is-breathing-in', 'is-breathing-out');
+            this.updateLevelDisplay();
+            this.updateInitialViewText();
+            if (this.elements.pauseResumeText.textContent === 'Resume') {
+                this.elements.pauseResumeIcon.setAttribute('data-feather', 'pause');
+                this.elements.pauseResumeText.textContent = 'Pause';
+                feather.replace();
+            }
+        },
+
+        updateLevelDisplay() {
+            this.elements.levelText.textContent = `Level ${this.config.level} - Cycle ${this.state.currentCycle}/${this.config.cyclesPerLevel}`;
+        },
+
+        updateInitialViewText() {
+            const levelConfig = this.config.timings[this.config.level - 1];
+            const h4 = this.elements.initialView.querySelector('h4');
+            const p = this.elements.initialView.querySelector('p');
+            const btn = this.elements.initialView.querySelector('#start-breathing-btn');
+            
+            h4.textContent = `Ready for Level ${levelConfig.level}?`;
+            p.textContent = `Inhale (${levelConfig.in}s), Hold (${levelConfig.holdIn}s), Exhale (${levelConfig.out}s).`;
+            btn.textContent = `Begin Level ${levelConfig.level}`;
+        }
+    };
+    breathingApp.init();
+
+    // A list of daily kindness challenge ideas
+const challenges = [
+    "Send a positive text to a friend or family member.",
+    "Give a genuine compliment to a stranger.",
+    "Write a short note of gratitude and leave it somewhere for someone to find.",
+    "Share a helpful resource with a fellow community member.",
+    "Offer to help a neighbor with a small task.",
+    "Leave a positive review for a small business you love.",
+    "Thank a service worker (like a barista, cashier, or delivery person).",
+    "Share a funny or uplifting meme in the community.",
+    "Let someone go ahead of you in line.",
+    "Hold the door open for someone."
+];
+
+// Function to get a random challenge from the list
+function getRandomChallenge() {
+    const today = new Date();
+    const dayOfYear = Math.floor((today - new Date(today.getFullYear(), 0, 0)) / 1000 / 60 / 60 / 24);
+    
+    // Use the day of the year to pick a challenge so it's consistent for everyone each day
+    return challenges[dayOfYear % challenges.length];
+}
+
+// Function to update the challenge text on the page
+function updateDailyChallenge() {
+    const challengeTextElement = document.querySelector('.daily-challenge-text');
+    const challenge = getRandomChallenge();
+    if (challengeTextElement) {
+        challengeTextElement.textContent = challenge;
+    }
+}
+
+// Event listener for the "Share What You Did" button
+document.addEventListener('DOMContentLoaded', () => {
+    const submitButton = document.getElementById('submit-entry-btn');
+    const submissionModal = document.getElementById('submission-modal');
+    const closeModalButton = document.getElementById('close-submission-modal-btn');
+    const submissionForm = document.getElementById('submission-form');
+
+    // Update the challenge text when the page loads
+    updateDailyChallenge();
+
+    if (submitButton) {
+        submitButton.addEventListener('click', () => {
+            if (submissionModal) {
+                submissionModal.classList.remove('hidden');
+                setTimeout(() => {
+                    submissionModal.classList.add('opacity-100');
+                    submissionModal.querySelector('div').classList.add('scale-100');
+                }, 10);
+            }
+        });
+    }
+
+    if (closeModalButton) {
+        closeModalButton.addEventListener('click', () => {
+            if (submissionModal) {
+                submissionModal.classList.remove('opacity-100');
+                submissionModal.querySelector('div').classList.remove('scale-100');
+                setTimeout(() => {
+                    submissionModal.classList.add('hidden');
+                }, 300);
+            }
+        });
+    }
+
+    if (submissionForm) {
+        submissionForm.addEventListener('submit', (event) => {
+            event.preventDefault();
+            alert("Thanks for sharing your kindness!");
+            // Here you would add the logic to submit the data to your backend
+            // You can close the modal after a successful submission
+            submissionModal.classList.remove('opacity-100');
+            submissionModal.querySelector('div').classList.remove('scale-100');
+            setTimeout(() => {
+                submissionModal.classList.add('hidden');
+            }, 300);
+        });
+    }
+});
+
+    // Scroll-triggered animations
+    const sections = document.querySelectorAll('.fade-in-section');
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('is-visible');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.1 });
+    sections.forEach(section => { observer.observe(section); });
+
+    // Mood Check-in and Theme Personalization
+    const moodThemes = {
+        default: {
+            hero: ['rgba(165, 243, 252, 0.7)', 'rgba(199, 210, 254, 0.7)'],
+            extra: ['rgba(199, 210, 254, 0.8)', 'rgba(251, 191, 219, 0.6)'],
+            gym: ['rgba(107, 217, 196, 0.9)', 'rgba(191, 219, 254, 0.9)']
+        },
+        great: {
+            hero: ['rgba(110, 231, 183, 0.7)', 'rgba(134, 239, 172, 0.7)'],
+            extra: ['rgba(165, 243, 252, 0.8)', 'rgba(253, 224, 71, 0.6)'],
+            gym: ['rgba(74, 222, 128, 0.9)', 'rgba(163, 230, 53, 0.9)'],
+            aura: 'rgba(74, 222, 128, 0.3)'
+        },
+        okay: {
+            hero: ['rgba(13, 148, 136, 0.7)', 'rgba(34, 211, 238, 0.7)'],
+            extra: ['rgba(103, 232, 249, 0.8)', 'rgba(165, 243, 252, 0.6)'],
+            gym: ['rgba(6, 182, 212, 0.9)', 'rgba(14, 165, 233, 0.9)'],
+            aura: 'rgba(34, 211, 238, 0.3)'
+        },
+        calm: {
+            hero: ['rgba(254, 226, 226, 0.8)', 'rgba(253, 190, 230, 0.8)'],
+            extra: ['rgba(251, 180, 220, 0.8)', 'rgba(232, 121, 249, 0.7)'],
+            gym: ['rgba(253, 164, 175, 0.9)', 'rgba(225, 190, 255, 0.9)'],
+            aura: 'rgba(253, 190, 230, 0.4)'
+        },
+        anxious: {
+            hero: ['rgba(253, 186, 116, 0.7)', 'rgba(251, 146, 60, 0.7)'],
+            extra: ['rgba(251, 146, 60, 0.8)', 'rgba(253, 224, 71, 0.6)'],
+            gym: ['rgba(251, 191, 36, 0.9)', 'rgba(245, 158, 11, 0.9)'],
+            aura: 'rgba(251, 191, 36, 0.3)'
+        },
+        stressed: {
+            hero: ['rgba(220, 38, 38, 0.7)', 'rgba(239, 68, 68, 0.7)'],
+            extra: ['rgba(239, 68, 68, 0.8)', 'rgba(129, 140, 248, 0.6)'],
+            gym: ['rgba(129, 140, 248, 0.9)', 'rgba(79, 70, 229, 0.9)'],
+            aura: 'rgba(239, 68, 68, 0.25)'
+        },
+        low: {
+            hero: ['rgba(96, 165, 250, 0.7)', 'rgba(59, 130, 246, 0.7)'],
+            extra: ['rgba(59, 130, 246, 0.8)', 'rgba(124, 58, 237, 0.6)'],
+            gym: ['rgba(99, 102, 241, 0.9)', 'rgba(79, 70, 229, 0.9)'],
+            aura: 'rgba(96, 165, 250, 0.3)'
+        },
+    };
+
+    const heroGradient = document.getElementById('waveGradient').querySelectorAll('stop');
+    const extraGradient = document.getElementById('waveGradientExtra').querySelectorAll('stop');
+    const gymGradient = document.getElementById('mindGymGradient').querySelectorAll('stop');
+    const moodAura = document.getElementById('mood-aura');
+    
+    function setTheme(mood = 'default') {
+        const theme = moodThemes[mood];
+        if (!theme) return;
+        
+        heroGradient[0].style.stopColor = theme.hero[0];
+        heroGradient[1].style.stopColor = theme.hero[1];
+
+        extraGradient[0].style.stopColor = theme.extra[0];
+        extraGradient[1].style.stopColor = theme.extra[1];
+
+        gymGradient[0].style.stopColor = theme.gym[0];
+        gymGradient[1].style.stopColor = theme.gym[1];
+        gymGradient[2].style.stopColor = theme.gym[0];
+
+        if (moodAura && theme.aura) {
+            moodAura.style.background = theme.aura;
+        }
+    }
+
+    const moodCards = document.querySelectorAll('.mood-card');
+    moodCards.forEach(card => {
+        card.addEventListener('click', () => {
+            const mood = card.dataset.mood;
+            setTheme(mood);
+        });
+    });
+
+    // --- Mind Gym Activity Selection and Play Button Logic ---
+    const activityContainer = document.querySelector('#mind-gym .space-y-4');
+    if (activityContainer) {
+        const allActivityCards = activityContainer.querySelectorAll(':scope > div');
+        const breathingModule = document.querySelector('.breathing-module-container');
+
+        function selectActivity(selectedCard) {
+            allActivityCards.forEach(card => {
+                const button = card.querySelector('button');
+                card.classList.remove('border-blue-500', 'border-2');
+                card.classList.add('opacity-70');
+                button.classList.remove('bg-blue-100', 'text-blue-600');
+                button.classList.add('bg-slate-100', 'text-slate-600');
+            });
+
+            selectedCard.classList.remove('opacity-70');
+            selectedCard.classList.add('border-blue-500', 'border-2');
+            const activeButton = selectedCard.querySelector('button');
+            activeButton.classList.remove('bg-slate-100', 'text-slate-600');
+            activeButton.classList.add('bg-blue-100', 'text-blue-600');
+        }
+
+        allActivityCards.forEach(card => {
+            const playButton = card.querySelector('button');
+            const activityTitle = card.querySelector('h4').textContent.trim();
+
+            card.addEventListener('click', (e) => {
+                selectActivity(card);
+            });
+
+            playButton.addEventListener('click', (e) => {
+                e.stopPropagation();
+                selectActivity(card);
+
+                switch (activityTitle) {
+                    case 'Breathing Balloon':
+                        if (window.innerWidth < 1024) {
+                            breathingModule.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        }
+                        breathingApp.reset();
+                        breathingApp.start();
+                        break;
+                    default:
+                        alert(`The "${activityTitle}" feature is coming soon!`);
+                        break;
+                }
+            });
+        });
+    }
+</script>
+
+<script>
+// Gamification Logic
+document.addEventListener("DOMContentLoaded", () => {
+    let totalPoints = 785; // starting points
+    const pointsDisplay = document.querySelector("#gamification .text-6xl");
+    const progressBars = document.querySelectorAll("#gamification .progress-bar-inner");
+    const continueButtons = document.querySelectorAll("#gamification button");
+    const rewards = document.querySelectorAll("#gamification .flex.items-center.justify-between");
+
+    function updatePoints(amount) {
+        totalPoints += amount;
+        pointsDisplay.textContent = totalPoints;
+        checkRewards();
+    }
+
+    function checkRewards() {
+        rewards.forEach(reward => {
+            const costText = reward.querySelector("p.text-sm.text-slate-400");
+            if (!costText) return;
+            const cost = parseInt(costText.textContent);
+            const button = reward.querySelector("button");
+
+            if (totalPoints >= cost) {
+                button.textContent = "Redeem";
+                button.classList.remove("bg-slate-300", "text-slate-500", "cursor-not-allowed");
+                button.classList.add("bg-green-500", "text-white");
+                button.disabled = false;
+                button.addEventListener("click", () => {
+                    updatePoints(-cost);
+                    alert(`🎉 You redeemed: ${reward.querySelector("p.font-semibold").textContent}`);
+                }, { once: true });
+            }
+        });
+    }
+
+    continueButtons.forEach((btn, index) => {
+        btn.addEventListener("click", () => {
+            const bar = progressBars[index];
+            let currentWidth = parseInt(bar.style.width);
+            if (currentWidth < 100) {
+                let newWidth = Math.min(currentWidth + 25, 100);
+                bar.style.width = newWidth + "%";
+                updatePoints(10); // reward for progress
+                if (newWidth === 100) {
+                    btn.textContent = "Completed!";
+                    btn.disabled = true;
+                    btn.classList.add("bg-gray-300", "cursor-not-allowed");
+                }
+            }
+        });
+    });
+
+    checkRewards();
+});
+</script>
+
+
+<script src="backend.js" type="module"></script>
+    
+    <script>
+      window.loveableConfig = {
+        chatId: 'u1fCaqJvWbf1Mf04CfYytqhO3TI3', // Make sure this is YOUR ID from Loveable AI
+      };
+    </script>
+    <script 
+      src="https://chat.loveable.ai/script.js" 
+      async>
+    </script>
+
+    <script>
+        // Feather Icons
+        feather.replace();
+
+        // ... all your other javascript code ...
+    </script>
+
+
+</body>
+</html>

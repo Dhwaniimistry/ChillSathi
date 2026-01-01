@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChillSaathi - Your Mental Wellness Companion</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <script src="https://unpkg.com/feather-icons"></script>
+  <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Smooth hover effect for each setting option */
+        .settings-item {
+          transition: all 0.2s ease-in-out;
+        }
+        .settings-item:hover {
+          transform: translateX(4px);
+          background-color: #f8fafc; /* subtle light hover */
+        }
+        
+        /* Logout button bounce */
+        #logout-btn {
+          transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        #logout-btn:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 6px 15px rgba(59, 130, 246, 0.4);
+        }
+
+        /* Toast Notification */
+        #toast {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translate(-50%, 150%);
+            transition: transform 0.5s ease-in-out;
+            z-index: 100;
+        }
+        #toast.show {
+            transform: translate(-50%, 0);
+        }
+
+        /* Modal styles */
+        #modal-backdrop {
+            transition: opacity 0.3s ease;
+        }
+        #modal-content {
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+
+        /* Hide scrollbar for better aesthetics */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+    </style>
+    
+
+<header class="bg-white/80 backdrop-blur-lg fixed top-0 left-0 right-0 z-50 shadow-sm">
+    <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+        <a href="#" class="text-2xl font-bold">
+            <span class="gradient-text">🌿 ChillSaathi</span>
+        </a>
+        <nav class="hidden md:flex items-center space-x-6">
+           <a href="index.html" class="hover:text-blue-500 transition-colors">Home</a>
+                <a href="#mind-gym" class="hover:text-blue-500 transition-colors">Mind Gym</a>
+                <a href="community.html" class="hover:text-blue-500 transition-colors">Community</a>
+                <a href="booking.html" class="block py-2hover:text-blue-500 transition-colors">Consultation</a>
+                <a href="about.html" class="hover:text-blue-500 transition-colors">About Us</a>
+            </nav>
+        </nav>
+        <div id="auth-container" class="hidden md:flex items-center space-x-2">
+            <div id="logged-out-view">
+                <a href="#" id="sign-in-btn" class="text-blue-500 font-semibold px-4 py-2 rounded-full hover:bg-blue-50">Sign In</a>
+                <a href="#" id="get-started-btn" class="bg-blue-500 text-white font-semibold px-5 py-2 rounded-full hover:bg-blue-600 shadow-md">Get Started</a>
+            </div>
+            
+            <div id="logged-in-view" class="hidden relative">
+                <button id="profile-menu-button" type="button" class="animated-gradient-background flex items-center space-x-2 text-sm text-white font-semibold rounded-md shadow-lg hover:brightness-110 transition-all focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 px-4 py-2">
+                    <i data-feather="user" class="h-5 w-5"></i>
+                    <span>Profile</span>
+                </button>
+                
+                <div id="profile-menu" class="origin-top-right absolute right-0 mt-2 w-56 rounded-lg shadow-xl bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
+                    <div class="px-4 py-3 border-b border-slate-200">
+                        <p class="text-sm font-medium text-slate-900">Signed in as</p>
+                        <p id="user-id-display" class="text-sm text-slate-500 truncate"></p>
+                    </div>
+                    
+                    <div class="py-1" role="none">
+                        <a href="/dashboard.html" class="group flex items-center gap-3 px-4 py-2 text-sm text-slate-700 hover:bg-blue-50 hover:text-blue-600 transition-colors" role="menuitem">
+                            <i data-feather="grid" class="w-4 h-4 text-slate-400 group-hover:text-blue-600 transition-colors"></i>
+                            <span>My Dashboard</span>
+                        </a>
+                        <a href="/settings.html" class="group flex items-center gap-3 px-4 py-2 text-sm text-slate-700 hover:bg-blue-50 hover:text-blue-600 transition-colors" role="menuitem">
+                            <i data-feather="settings" class="w-4 h-4 text-slate-400 group-hover:text-blue-600 transition-colors"></i>
+                            <span>Account Settings</span>
+                        </a>
+                        <a href="/help.html" class="group flex items-center gap-3 px-4 py-2 text-sm text-slate-700 hover:bg-blue-50 hover:text-blue-600 transition-colors" role="menuitem">
+                            <i data-feather="help-circle" class="w-4 h-4 text-slate-400 group-hover:text-blue-600 transition-colors"></i>
+                            <span>Help & Support</span>
+                        </a>
+    
+                    </div>
+
+                        <div class="py-1 border-t border-slate-200" role="none">
+                            <button id="sign-out-btn" class="group w-full flex items-center gap-3 text-left px-4 py-2 text-sm text-slate-700 hover:bg-blue-50 hover:text-blue-600 transition-colors" role="menuitem">
+                                <i data-feather="log-out" class="w-4 h-4 text-slate-400 group-hover:text-blue-600 transition-colors"></i>
+                                <span>Sign Out</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button id="mobile-menu-button" class="md:hidden"><i data-feather="menu"></i></button>
+    </div>
+    <div id="mobile-menu" class="hidden md:hidden px-6 pb-4">
+        <a href="index.html" class="block py-2">Home</a>
+        <a href="#mind-gym" class="block py-2">Mind Gym</a>
+        <a href="community.html" class="block py-2">Community</a>
+        <a href="booking.html" class="block py-2">Consultation</a>
+        <a href="about.html" class="block py-2">About Us</a>
+        <div class="mt-4 border-t pt-4">
+            <a href="#" class="block text-center w-full text-blue-500 font-semibold px-4 py-2 rounded-full hover:bg-blue-50">Sign In</a>
+            <a href="#" class="block text-center mt-2 w-full bg-blue-500 text-white font-semibold px-5 py-2 rounded-full hover:bg-blue-600">Get Started</a>
+        </div>
+    </div>
+</header>
+
+
+<section id="account-settings" class="py-16 bg-slate-50 min-h-screen">
+  <div class="container mx-auto px-6 max-w-2xl">
+    <h2 class="text-3xl font-bold text-slate-800 mb-6">Account Settings</h2>
+
+    <!-- User Info -->
+    <div class="bg-white p-4 rounded-xl shadow-md flex items-center gap-4 mb-6">
+      <img src="https://ui-avatars.com/api/?name=User&background=3b82f6&color=fff" 
+           alt="User Avatar" class="w-16 h-16 rounded-full">
+      <div>
+        <p class="font-semibold text-lg text-slate-800" id="user-name">John Doe</p>
+        <p class="text-slate-500 text-sm" id="user-number">+91 98765 43210</p>
+      </div>
+    </div>
+
+    <!-- Settings List -->
+    <div class="space-y-4">
+      <!-- Privacy -->
+      <div class="bg-white p-4 rounded-xl shadow-md flex items-center justify-between cursor-pointer hover:bg-slate-100">
+        <div class="flex items-center gap-3">
+          <i data-feather="lock" class="w-5 h-5 text-blue-500"></i>
+          <div>
+            <p class="font-semibold text-slate-800">Privacy</p>
+            <p class="text-sm text-slate-500">Control your profile visibility</p>
+          </div>
+        </div>
+        <i data-feather="chevron-right" class="w-5 h-5 text-slate-400"></i>
+      </div>
+
+      <!-- Security -->
+      <div class="bg-white p-4 rounded-xl shadow-md flex items-center justify-between cursor-pointer hover:bg-slate-100">
+        <div class="flex items-center gap-3">
+          <i data-feather="shield" class="w-5 h-5 text-green-500"></i>
+          <div>
+            <p class="font-semibold text-slate-800">Security</p>
+            <p class="text-sm text-slate-500">Two-step verification, security alerts</p>
+          </div>
+        </div>
+        <i data-feather="chevron-right" class="w-5 h-5 text-slate-400"></i>
+      </div>
+
+      <!-- Notifications -->
+      <div class="bg-white p-4 rounded-xl shadow-md flex items-center justify-between cursor-pointer hover:bg-slate-100">
+        <div class="flex items-center gap-3">
+          <i data-feather="bell" class="w-5 h-5 text-amber-500"></i>
+          <div>
+            <p class="font-semibold text-slate-800">Notifications</p>
+            <p class="text-sm text-slate-500">Message, group & call alerts</p>
+          </div>
+        </div>
+        <i data-feather="chevron-right" class="w-5 h-5 text-slate-400"></i>
+      </div>
+
+      <!-- Storage & Data -->
+      <div class="bg-white p-4 rounded-xl shadow-md flex items-center justify-between cursor-pointer hover:bg-slate-100">
+        <div class="flex items-center gap-3">
+          <i data-feather="database" class="w-5 h-5 text-purple-500"></i>
+          <div>
+            <p class="font-semibold text-slate-800">Storage & Data</p>
+            <p class="text-sm text-slate-500">Manage usage, auto-download</p>
+          </div>
+        </div>
+        <i data-feather="chevron-right" class="w-5 h-5 text-slate-400"></i>
+      </div>
+
+      <!-- Help -->
+      <div class="bg-white p-4 rounded-xl shadow-md flex items-center justify-between cursor-pointer hover:bg-slate-100">
+        <div class="flex items-center gap-3">
+          <i data-feather="help-circle" class="w-5 h-5 text-pink-500"></i>
+          <div>
+            <p class="font-semibold text-slate-800">Help</p>
+            <p class="text-sm text-slate-500">FAQs, contact support</p>
+          </div>
+        </div>
+        <i data-feather="chevron-right" class="w-5 h-5 text-slate-400"></i>
+      </div>
+
+      <!-- Logout -->
+      <button id="logout-btn" 
+              class="w-full bg-red-500 text-white font-semibold py-3 rounded-lg hover:bg-red-600 mt-6">
+        Log Out
+      </button>
+    </div>
+  </div>
+</section>
+
+<footer class="bg-slate-800 text-slate-300 py-16">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-lg font-bold text-white">🌿 ChillSaathi</h3>
+                    <p class="mt-2 text-sm text-slate-400">Your trusted companion for mental wellness. Providing stigma-free, confidential support for college students across India.</p>
+                </div>
+                 <div>
+                    <h4 class="font-semibold text-white">Quick Access</h4>
+                    <ul class="mt-4 space-y-2 text-sm">
+                        <li><a href="#" class="text-slate-400 hover:text-white">AI Support Chat</a></li>
+                        <li><a href="#" class="text-slate-400 hover:text-white">Mind Gym Activities</a></li>
+                        <li><a href="#" class="text-slate-400 hover:text-white">Peer Community</a></li>
+                        <li><a href="#" class="text-slate-400 hover:text-white">Resource Library</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-white">Need Help?</h4>
+                    <ul class="mt-4 space-y-2 text-sm">
+                        <li><a href="#" class="text-slate-400 hover:text-white">Emergency: 1075 (KIRAN)</a></li>
+                        <li><a href="#" class="text-slate-400 hover:text-white">24/7 Peer Support</a></li>
+                         <li><a href="#" class="text-slate-400 hover:text-white">Crisis Resources</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-white">Regional Support</h4>
+                     <ul class="mt-4 space-y-2 text-sm grid grid-cols-2">
+                        <li><a href="#" class="text-slate-400 hover:text-white">हिन्दी</a></li>
+                        <li><a href="#" class="text-slate-400 hover:text-white">ગુજરાતી</a></li>
+                        <li><a href="#" class="text-slate-400 hover:text-white">मराठी</a></li>
+                        <li><a href="#" class="text-slate-400 hover:text-white">தமிழ்</a></li>
+                     </ul>
+                </div>
+            </div>
+            <div class="mt-12 border-t border-slate-700 pt-8 text-center text-sm text-slate-400">
+                <p>&copy; 2025 ChillSaathi. All Rights Reserved. Built with ❤️ for student mental health.</p>
+            </div>
+        </div>
+    </footer>
+
+<script>
+  feather.replace(); // Render feather icons
+  // Example: dynamically show logged-in user
+  document.getElementById("user-name").textContent = localStorage.getItem("userName") || "John Doe";
+  document.getElementById("user-number").textContent = localStorage.getItem("userNumber") || "+91 98765 43210";
+
+  document.getElementById("logout-btn").addEventListener("click", () => {
+    localStorage.clear();
+    alert("You have been logged out!");
+    window.location.href = "index.html"; // redirect to homepage/login
+  });
+</script>

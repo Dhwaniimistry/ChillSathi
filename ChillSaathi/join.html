@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Community Form</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/feather-icons"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f7f9fc;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 1rem;
+        }
+        .modal-container {
+            position: relative;
+            background-color: #fff;
+            border-radius: 1.5rem;
+            padding: 2rem;
+            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+            width: 100%;
+            max-width: 42rem;
+            opacity: 1;
+            transform: scale(1);
+        }
+        .gradient-text {
+            background: linear-gradient(to right, #2dd4bf, #3b82f6);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-fill-color: transparent;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="community-form-container" class="modal-container">
+        <div class="text-center mb-6">
+            <h2 class="text-3xl font-bold text-slate-800">Join the Community</h2>
+            <p class="mt-2 text-slate-500">Help us personalize your experience.</p>
+        </div>
+        <form id="community-form" class="space-y-6">
+            <div>
+                <label class="block text-lg font-semibold text-slate-700">Why do you want to join ChillSaathi?</label>
+                <div class="mt-2 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <label class="flex items-center">
+                        <input type="radio" name="join-reason" value="connect" class="h-5 w-5 text-blue-600 border-gray-300 focus:ring-blue-500">
+                        <span class="ml-2 text-slate-700">To connect with peers</span>
+                    </label>
+                    <label class="flex items-center">
+                        <input type="radio" name="join-reason" value="coping" class="h-5 w-5 text-blue-600 border-gray-300 focus:ring-blue-500">
+                        <span class="ml-2 text-slate-700">To learn coping strategies</span>
+                    </label>
+                    <label class="flex items-center">
+                        <input type="radio" name="join-reason" value="share" class="h-5 w-5 text-blue-600 border-gray-300 focus:ring-blue-500">
+                        <span class="ml-2 text-slate-700">To share my experiences</span>
+                    </label>
+                    <label class="flex items-center">
+                        <input type="radio" name="join-reason" value="resources" class="h-5 w-5 text-blue-600 border-gray-300 focus:ring-blue-500">
+                        <span class="ml-2 text-slate-700">To get mental health resources</span>
+                    </label>
+                </div>
+            </div>
+
+            <div>
+                <label class="block text-lg font-semibold text-slate-700">Which topics interest you the most?</label>
+                <div class="mt-2 grid grid-cols-2 sm:grid-cols-3 gap-4">
+                    <label class="flex items-center">
+                        <input type="checkbox" name="topics" value="stress" class="h-5 w-5 text-blue-600 rounded border-gray-300 focus:ring-blue-500">
+                        <span class="ml-2 text-slate-700">Stress management</span>
+                    </label>
+                    <label class="flex items-center">
+                        <input type="checkbox" name="topics" value="anxiety" class="h-5 w-5 text-blue-600 rounded border-gray-300 focus:ring-blue-500">
+                        <span class="ml-2 text-slate-700">Anxiety & depression support</span>
+                    </label>
+                    <label class="flex items-center">
+                        <input type="checkbox" name="topics" value="academic" class="h-5 w-5 text-blue-600 rounded border-gray-300 focus:ring-blue-500">
+                        <span class="ml-2 text-slate-700">Academic pressure</span>
+                    </label>
+                     <label class="flex items-center">
+                        <input type="checkbox" name="topics" value="relationships" class="h-5 w-5 text-blue-600 rounded border-gray-300 focus:ring-blue-500">
+                        <span class="ml-2 text-slate-700">Relationships & friendships</span>
+                    </label>
+                    <label class="flex items-center">
+                        <input type="checkbox" name="topics" value="self-care" class="h-5 w-5 text-blue-600 rounded border-gray-300 focus:ring-blue-500">
+                        <span class="ml-2 text-slate-700">Self-care & mindfulness</span>
+                    </label>
+                    <label class="flex items-center">
+                        <input type="checkbox" name="topics" value="career" class="h-5 w-5 text-blue-600 rounded border-gray-300 focus:ring-blue-500">
+                        <span class="ml-2 text-slate-700">Career/ future worries</span>
+                    </label>
+                </div>
+            </div>
+
+            <div>
+                <label class="block text-lg font-semibold text-slate-700">How would you like to participate?</label>
+                <div class="mt-2 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <label class="flex items-center">
+                        <input type="radio" name="participation" value="listen" class="h-5 w-5 text-blue-600 border-gray-300 focus:ring-blue-500">
+                        <span class="ml-2 text-slate-700">Just listen/observe</span>
+                    </label>
+                    <label class="flex items-center">
+                        <input type="radio" name="participation" value="share" class="h-5 w-5 text-blue-600 border-gray-300 focus:ring-blue-500">
+                        <span class="ml-2 text-slate-700">Share my thoughts/experiences</span>
+                    </label>
+                    <label class="flex items-center">
+                        <input type="radio" name="participation" value="discussions" class="h-5 w-5 text-blue-600 border-gray-300 focus:ring-blue-500">
+                        <span class="ml-2 text-slate-700">Join group discussions</span>
+                    </label>
+                     <label class="flex items-center">
+                        <input type="radio" name="participation" value="volunteer" class="h-5 w-5 text-blue-600 border-gray-300 focus:ring-blue-500">
+                        <span class="ml-2 text-slate-700">Volunteer to support others</span>
+                    </label>
+                </div>
+            </div>
+
+            <div>
+                 <label class="block text-lg font-semibold text-slate-700">Preferred mode of engagement:</label>
+                <div class="mt-2 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <label class="flex items-center">
+                        <input type="radio" name="engagement" value="chats" class="h-5 w-5 text-blue-600 border-gray-300 focus:ring-blue-500">
+                        <span class="ml-2 text-slate-700">Group chats</span>
+                    </label>
+                    <label class="flex items-center">
+                        <input type="radio" name="engagement" value="webinars" class="h-5 w-5 text-blue-600 border-gray-300 focus:ring-blue-500">
+                        <span class="ml-2 text-slate-700">Online sessions/webinars</span>
+                    </label>
+                    <label class="flex items-center">
+                        <input type="radio" name="engagement" value="sharing" class="h-5 w-5 text-blue-600 border-gray-300 focus:ring-blue-500">
+                        <span class="ml-2 text-slate-700">Resource sharing (articles, tips, videos)</span>
+                    </label>
+                </div>
+            </div>
+            
+            <button type="submit" class="w-full bg-blue-500 text-white font-semibold py-3 rounded-lg hover:bg-blue-600 shadow-md">
+                Done
+            </button>
+        </form>
+    </div>
+
+</body>
+
+</html>
