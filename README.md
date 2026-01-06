@@ -53,7 +53,8 @@ Clone the Repo:
 
 Bash
 
-git clone https://github.com/yourusername/chillsaathi.git
+git clone https://github.com/Dhwaniimistry/ChillSathi.git
+
 Open the Project: Open index.html in your preferred browser.
 
 Explore Features: Navigate to the Community section to see the Kindness Challenge in action.
